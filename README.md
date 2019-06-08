@@ -20,7 +20,6 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - visualizzazione di tutte le opere di un determinato artista, eventualmente suddivise per tipologia e presentando un report generale, anche grafico, su anni, tipologie, etc...;
 - ricerca delle opere inserendo uno o più parametri (anche parziali), in forma libera o eventualmente guidata;
 - calcolo di statistiche relative ad artisti e opere, ad esempio:
-• numero di opere realizzate in un determinato anno;
-• numero di opere per artista;
-• etc.
-                                 
+  - numero di opere realizzate in un determinato anno;
+  - numero di opere per artista;
+  - etc.
