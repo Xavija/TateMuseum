@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS TATE;
 CREATE DATABASE TATE;
 USE TATE;
 
@@ -19,7 +20,7 @@ CREATE TABLE Artist (
 -- dimensions,width,height,depth,units,inscription,thumbnailCopyright,thumbnailUrl,url
 CREATE TABLE Artwork (
 	id                  INT             NOT NULL    AUTO_INCREMENT,                         -- 1035
-	accession_number    CHAR(6)         NOT NULL    UNIQUE,                                 -- A00001
+	accession_number    CHAR(10)        NOT NULL,                  				            -- A00001
 	artist              VARCHAR(200)    NOT NULL,                                           -- "Blake, Robert"
 	artistRole          VARCHAR(50),                                                        -- artist
 	artistId            INT,					                                            -- 38
@@ -29,10 +30,10 @@ CREATE TABLE Artwork (
 	creditLine          VARCHAR(200),                                                       -- Presented by Mrs John Richmond 1922
 	year                VARCHAR(50),														-- NULL
 	acquisitionYear		INT,																-- 1922
-	dimensions			VARCHAR(50),														-- support: 394 x 419 mm
-	width				INT,																-- 394
-	height 				INT, 																-- 419
-	depth 				INT,																-- NULL
+	dimensions			VARCHAR(500),														-- support: 394 x 419 mm
+	width				VARCHAR(4),																-- 394
+	height 				VARCHAR(4), 																-- 419
+	depth 				VARCHAR(4),																-- NULL
 	units				CHAR(2),															-- mm
 	inscription			VARCHAR(300),														-- NULL
 	thumbnailCopyright 	VARCHAR(200),														-- NULL
