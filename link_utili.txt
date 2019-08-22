@@ -1,0 +1,1 @@
+https://github.com/vue-bulma/tabs
