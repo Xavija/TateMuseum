@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"
+		/>
+		<style>
+			body {
+				font-family: Arial;
+				color: #dddddd;
+			}
+
+			.left {
+				left: 0;
+				/* background-color: #111; */
+				height: 100%;
+				width: 25%;
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				overflow-x: hidden;
+				padding-top: 20px;
+			}
+
+			.right {
+				right: 0;
+				/* background-color: #333333; */
+				height: 100%;
+				width: 74%;
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				overflow-x: hidden;
+				padding-top: 20px;
+			}
+
+			.centered {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				text-align: center;
+			}
+
+			.centered img {
+				width: 150px;
+				border-radius: 50%;
+			}
+		</style>
+		<script type="text/javascript">
+			function activateTab(pageId) {
+				var tabCtrl = document.getElementById("tabCtrl");
+				var pageToActivate = document.getElementById(pageId);
+				for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+					var node = tabCtrl.childNodes[i];
+					if (node.nodeType == 1) {
+						/* Element */
+						node.style.display = node == pageToActivate ? "block" : "none";
+					}
+				}
+			}
+		</script>
+	</head>
+
+	<body>
+		<div class="split left">
+			<form action="index.html" method="get">
+				<input
+					class="input is-primary is-medium is-rounded is-focused"
+					type="number"
+					placeholder="ID Artista"
+					min="0"
+					step="1"
+				/>
+				<br /><br />
+				<button class="button is-large is-success is-rounded">
+					Sciopa
+				</button>
+			</form>
+		</div>
+
+		<div class="split right">
+			<div class="tabs is-toggle is-toggle-rounded is-centered">
+				<ul>
+					<li class="is-active">
+						<a href="javascript:activateTab('page1')">
+							<span class="icon is-small">
+								<i class="fas" aria-hidden="true"></i>
+							</span>
+							<span>Tab 1</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:activateTab('page2')">
+							<span class="icon is-small">
+								<i class="fas"></i>
+							</span>
+							<span>Tab 2</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:activateTab('page3')">
+							<span class="icon is-small">
+								<i class="fas"></i>
+							</span>
+							<span>Tab 3</span>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:activateTab('page4')">
+							<span class="icon is-small">
+								<i class="fas"></i>
+							</span>
+							<span>Tab 4</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<div id="tabCtrl">
+				<div id="page1" style="display: block;">Page 1</div>
+				<div id="page2" style="display: none;">Page 2</div>
+				<div id="page3" style="display: none;">Page 3</div>
+				<div id="page4" style="display: none;">Page 4</div>
+			</div>
+		</div>
+	</body>
+</html>
+<!-- <html>
+	<head>
+		<script type="text/javascript">
+			function activateTab(pageId) {
+				var tabCtrl = document.getElementById("tabCtrl");
+				var pageToActivate = document.getElementById(pageId);
+				for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+					var node = tabCtrl.childNodes[i];
+					if (node.nodeType == 1) {
+						/* Element */
+						node.style.display = node == pageToActivate ? "block" : "none";
+					}
+				}
+			}
+		</script>
+	</head>
+	<body>
+		<ul>
+			<li>
+				<a href="javascript:activateTab('page1')">Tab 1</a>
+			</li>
+			<li>
+				<a href="javascript:activateTab('page2')">Tab 2</a>
+			</li>
+			...
+		</ul>
+		<div id="tabCtrl">
+			<div id="page1" style="display: block;">Page 1</div>
+			<div id="page2" style="display: none;">Page 2</div>
+			...
+		</div>
+	</body>
+</html> -->
