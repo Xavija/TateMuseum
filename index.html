@@ -49,10 +49,11 @@
 		<div class="split right">
 			<div class="backgroundRight">
 				<br />
-				<div class="tabs is-toggle is-toggle-rounded is-centered">
+					<div class="buh">
+				<div class="tabs is-toggle is-centered">
 					<ul>
-						<li class="is-active">
-							<a href="javascript:activateTab('page1')">
+						<li class="is-active" id="1">
+							<a href="javascript:activateTab('tab1div', '1')">
 								<span class="icon is-small">
 									<i class="fas" aria-hidden="true"></i>
 								</span>
@@ -61,8 +62,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="is-active">
-							<a href="javascript:activateTab('page2')">
+						<li class="" id="2">
+							<a href="javascript:activateTab('tab2div', '2')">
 								<span class="icon is-small">
 									<i class="fas"></i>
 								</span>
@@ -71,8 +72,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="is-active">
-							<a href="javascript:activateTab('page3')">
+						<li class="" id="3">
+							<a href="javascript:activateTab('tab3div', '3')">
 								<span class="icon is-small">
 									<i class="fas"></i>
 								</span>
@@ -81,8 +82,8 @@
 								</span>
 							</a>
 						</li>
-						<li class="is-active">
-							<a href="javascript:activateTab('page4')">
+						<li class="" id="4">
+							<a href="javascript:activateTab('tab4div', '4')">
 								<span class="icon is-small">
 									<i class="fas"></i>
 								</span>
@@ -93,11 +94,12 @@
 						</li>
 					</ul>
 				</div>
+			</div>
 				<div id="tabCtrl">
-					<div id="page1" style="display: block;">Page 1</div>
-					<div id="page2" style="display: none;">Page 2</div>
-					<div id="page3" style="display: none;">Page 3</div>
-					<div id="page4" style="display: none;">Page 4</div>
+					<div id="tab1div" style="display: block;">Page 1</div>
+					<div id="tab2div" style="display: none;">Page 1<br>Page 2</div>
+					<div id="tab3div" style="display: none;">Page 1<br>Page 2<br>Page 3</div>
+					<div id="tab4div" style="display: none;">Page 1<br>Page 2<br>Page 3<br>Page 4</div>
 				</div>
 			</div>
 		</div>

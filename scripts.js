@@ -9,7 +9,7 @@ $(document).ready(function() {
 	});
 });
 
-function activateTab(pageId) {
+function activateTab(pageId, id) {
 	var tabCtrl = document.getElementById("tabCtrl");
 	var pageToActivate = document.getElementById(pageId);
 	for (var i = 0; i < tabCtrl.childNodes.length; i++) {
@@ -18,4 +18,10 @@ function activateTab(pageId) {
 			node.style.display = node == pageToActivate ? "block" : "none";
 		}
 	}
+	// temp (si spera)
+	document.getElementById("1").className = "";
+	document.getElementById("2").className = "";
+	document.getElementById("3").className = "";
+	document.getElementById("4").className = "";
+	document.getElementById(id).className = "is-active";
 }
