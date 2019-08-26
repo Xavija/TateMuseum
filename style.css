@@ -1,0 +1,81 @@
+body {
+	font-family: Arial;
+	color: #444444;
+}
+.backgroundLeft {
+	background: linear-gradient(
+		0deg,
+		rgb(11, 140, 229) 0%,
+		rgb(11, 140, 229) 16.667%,
+		rgb(36, 162, 230) 16.667%,
+		rgb(36, 162, 230) 33.334%,
+		rgb(62, 184, 232) 33.334%,
+		rgb(62, 184, 232) 50.001000000000005%,
+		rgb(87, 207, 233) 50.001%,
+		rgb(87, 207, 233) 66.668%,
+		rgb(113, 229, 235) 66.668%,
+		rgb(113, 229, 235) 83.33500000000001%,
+		rgb(138, 251, 236) 83.335%,
+		rgb(138, 251, 236) 100.002%
+	);
+	height: calc(100%);
+	/* width: calc(100%); */
+	padding-left: 5%;
+	padding-right: 25%;
+}
+
+.backgroundRight {
+	background: linear-gradient(
+		0deg,
+		rgb(11, 140, 229) 0%,
+		rgb(11, 140, 229) 16.667%,
+		rgb(36, 162, 230) 16.667%,
+		rgb(36, 162, 230) 33.334%,
+		rgb(62, 184, 232) 33.334%,
+		rgb(62, 184, 232) 50.001000000000005%,
+		rgb(87, 207, 233) 50.001%,
+		rgb(87, 207, 233) 66.668%,
+		rgb(113, 229, 235) 66.668%,
+		rgb(113, 229, 235) 83.33500000000001%,
+		rgb(138, 251, 236) 83.335%,
+		rgb(138, 251, 236) 100.002%
+	);
+	height: calc(100%);
+	/* width: calc(100%); */
+	padding-left: 5%;
+	padding-right: 5%;
+}
+
+.left {
+	display: block;
+	left: 0;
+	height: 100%;
+	width: 25%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	overflow-x: hidden;
+}
+
+.right {
+	right: 0;
+	height: 100%;
+	width: 75%;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	overflow-x: hidden;
+}
+
+/* .centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+} */
+
+/* .centered img {
+    width: 150px;
+    border-radius: 50%;
+} */
