@@ -2,15 +2,26 @@ body {
 	font-family: Arial;
 	color: #444444;
 }
-.backgroundLeft {
+
+.left {
+	left: 0;
+	width: 25%;
+	height: 100%;
+	padding-left: 1%;
+	padding-right: 5%;
+	position: fixed;
+	overflow-x: hidden;
 	background: rgb(163, 234, 72);
-	height: calc(100%);
-	/* width: calc(100%); */
-	padding-left: 5%;
-	padding-right: 25%;
 }
 
-.backgroundRight {
+.right {
+	right: 0;
+	width: 75%;
+	height: 100%;
+	padding-left: 5%;
+	padding-right: 5%;
+	position: fixed;
+	overflow-x: hidden;
 	background: linear-gradient(
 		135deg,
 		rgb(163, 234, 72) 0%,
@@ -22,46 +33,4 @@ body {
 		rgb(71, 119, 63) 75%,
 		rgb(71, 119, 63) 100%
 	);
-	height: calc(100%);
-	/* width: calc(100%); */
-	padding-left: 5%;
-	padding-right: 5%;
-}
-
-.left {
-	display: block;
-	left: 0;
-	height: 100%;
-	width: 25%;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	overflow-x: hidden;
-}
-
-.right {
-	right: 0;
-	height: 100%;
-	width: 75%;
-	position: fixed;
-	z-index: 1;
-	top: 0;
-	overflow-x: hidden;
-}
-
-/* .centered {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-} */
-
-/* .centered img {
-    width: 150px;
-    border-radius: 50%;
-} */
-
-.buh {
-	background: #ffffff;
 }
