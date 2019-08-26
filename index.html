@@ -7,18 +7,8 @@
 			href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"
 		/>
 		<link rel="stylesheet" type="text/css" href="style.css" />
-		<script type="text/javascript">
-			function activateTab(pageId) {
-				var tabCtrl = document.getElementById("tabCtrl");
-				var pageToActivate = document.getElementById(pageId);
-				for (var i = 0; i < tabCtrl.childNodes.length; i++) {
-					var node = tabCtrl.childNodes[i];
-					if (node.nodeType == 1) {
-						node.style.display = node == pageToActivate ? "block" : "none";
-					}
-				}
-			}
-		</script>
+		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
 	</head>
 
 	<body>
@@ -26,16 +16,31 @@
 			<div class="backgroundLeft">
 				<form action="index.html" method="get">
 					<br />
+					<input type="checkbox" id="ArtistInfo" checked> Artist Info</input>
+					<div id="ArtistDiv" class="ArtistDiv">
+						<input
+							class="input is-primary is-rounded is-focused"
+							type="number"
+							placeholder="ID Artista"
+							min="0"
+							step="1"
+						/>
+					</div>
+					<br />
+					<input type="checkbox" id="ArtworkInfo"> Artwork Info</input>
+					<div id="ArtworkDiv" class="ArtworkDiv" hidden>
 					<input
 						class="input is-primary is-rounded is-focused"
 						type="number"
-						placeholder="ID Artista"
+						placeholder="ID Opera"
 						min="0"
 						step="1"
 					/>
-					<br /><br />
+					<br />
+					</div>
+					<br />
 					<button class="button is- is-success is-rounded">
-						Button
+						Search
 					</button>
 				</form>
 			</div>
