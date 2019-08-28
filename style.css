@@ -1,5 +1,6 @@
 body {
 	font-family: Arial;
+	font-size: 125%;
 	color: #444444;
 }
 
@@ -12,6 +13,7 @@ body {
 	position: fixed;
 	overflow-x: hidden;
 	background: rgb(163, 234, 72);
+	text-align: center;
 }
 
 .right {
@@ -33,4 +35,8 @@ body {
 		rgb(71, 119, 63) 75%,
 		rgb(71, 119, 63) 100%
 	);
+}
+
+.alignLeft {
+	text-align: left;
 }
