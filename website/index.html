@@ -4,7 +4,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <link rel="stylesheet" href="bulma.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
@@ -13,12 +13,12 @@
 
 <body style="font-family: Arial; font-size: 125%; color: #444444;">
     <div class="split left">
-        <form action="index.html" method="get">
+        <form action="connessione.php" method="get">
             <br><b> General Info</b>
             <input class="input is-rounded is-focused" type="text" name="general" placeholder="Author/Artwork generic info" style="margin-top:4px; margin-bottom: 25px;"><br>
             <b>Filters</b><br>
             <div style="text-align: left;">
-                <input type="checkbox" id="ArtistInfo">Artist</input>
+                <input type="checkbox" id="ArtistInfo" name="artistInfo" value="true">Artist</input>
                 <div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
                     <div class="control">
                         <input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
@@ -29,7 +29,7 @@
                     </div>
                 </div><br>
 
-                <input type="checkbox" id="DatesInfo">Dates</input>
+                <input type="checkbox" id="DatesInfo" name="datesInfo" value="true">Dates</input>
                 <div id="DatesDiv" style="margin-bottom: -5%;" hidden>
                     <div class="control">
                         <input class="input is-rounded is-focused" type="number" min=0 name="artistYear" placeholder="Artist: Year Of Birth/Death" style="margin-top:4px; margin-bottom: 7px;">
@@ -37,7 +37,7 @@
                     </div>
                 </div><br>
 
-                <input type="checkbox" id="ArtworkInfo">Artwork</input>
+                <input type="checkbox" id="ArtworkInfo" name="artworkInfo" value="true">Artwork</input>
                 <div id="ArtworkDiv" style="margin-bottom: -1%;" hidden>
                     <div class="control">
                         <input class="input is-rounded is-focused" type="text" name="inscription" placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
