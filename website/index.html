@@ -23,12 +23,13 @@
                     <div class="control">
                         <input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
                         <input class="input is-rounded is-focused" type="text" name="places" placeholder="Places" style="margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="number" min=0 name="artistYear" placeholder="Year Of birth/death" style="margin-top:4px; margin-bottom: 7px;">
                         <input type="radio" name="gender" value="all" checked> All<br>
                         <input type="radio" name="gender" value="Male"> Male<br>
                         <input type="radio" name="gender" value="Female"> Female
                     </div>
                 </div><br>
-
+<!-- 
                 <input type="checkbox" id="DatesInfo" name="datesInfo" value="true">Dates</input>
                 <div id="DatesDiv" style="margin-bottom: -5%;" hidden>
                     <div class="control">
@@ -36,12 +37,13 @@
                         <input class="input is-rounded is-focused" type="number" min=0 name="artworkYear" placeholder="Artwork: Year" style="margin-bottom: 7px;">
                     </div>
                 </div><br>
-
+ -->
                 <input type="checkbox" id="ArtworkInfo" name="artworkInfo" value="true">Artwork</input>
                 <div id="ArtworkDiv" style="margin-bottom: -1%;" hidden>
                     <div class="control">
                         <input class="input is-rounded is-focused" type="text" name="inscription" placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
                         <input class="input is-rounded is-focused" type="text" name="medium" placeholder="Medium" style="margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="number" min=0 name="artworkYear" placeholder="Artwork year" style="margin-bottom: 7px;">
                         <input type="radio" name="artistRole" value="all" checked> All<br>
                         <input type="radio" name="artistRole" value="artist"> Artist<br>
                         <input type="radio" name="artistRole" value="attributed to"> Attributed to<br>
@@ -82,7 +84,7 @@
                             <a href="#" class="dropdown-item">
 								A - Z
 							</a>
-                            <a href="#" class="dropdown-item">
+                            <a href="#" class="dropdown-item" >
 								Z - A
 							</a>
                         </div>

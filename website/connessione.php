@@ -37,7 +37,7 @@
 	*/
 
 	$general 		= $_GET["general"];
-	$infos			= array(isset($_GET["artistInfo"]), isset($_GET["datesInfo"]), isset($_GET["artworkInfo"]));
+	$infos			= array(isset($_GET["artistInfo"]) ? 1 : 0, /* isset($_GET["datesInfo"]) ? 1 : 0, */ isset($_GET["artworkInfo"]) ? 1 : 0);
 	$artist_name	= $_GET["name"];
 	$places			= $_GET["places"];
 	$artist_year	= strval($_GET["artistYear"]);
@@ -46,8 +46,9 @@
 	$medium			= $_GET["medium"];
 	$artist_role	= $_GET["artistRole"];
 	
+
 	echo 'general: ' 		. $general 										. '<br>';
-	echo 'infos: ' 			. $infos[0] . ' ' . $infos[1] . ' ' . $infos[2] . '<br>';
+	echo 'infos: ' 			. $infos[0] . ' ' . $infos[1] /* . ' ' . $infos[2] */ . '<br>';
 	echo 'artist_name: ' 	. $artist_name 									. '<br>';
 	echo 'artist_year: ' 	. $artist_year 									. '<br>';
 	echo 'artwork_year: ' 	. $artwork_year 								. '<br>';
@@ -55,30 +56,38 @@
 	echo 'medium: ' 		. $medium 										. '<br>';
 	echo 'artist_role: ' 	. $artist_role 									. '<br>';
 
-	// Query
+	// Queries
 	// TODO:
 	// - sql injection prevention
+	// se l'utente non inserisce dati
 
-	// SELECTED ARTWORKS - eseguita per visualizzare opere d'arte inerenti
-	// eseguita per la tab Artworks
-	$query ='	SELECT Title, Name, Medium, DateText
-				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-				WHERE Title LIKE "%'.$keywords.'%"
-			;';	
-
-	echo '<br><br><h2> Selected artworks </h2><br><br>';
-	$result = $link->query($query);
-	if($result->num_rows > 0) {
-		echo '<table><tr><th>Title</th><th>Name</th><th>Medium</th><th>DateText</th></tr>';
-		while($row = $result->fetch_assoc()) {
-			echo '<tr><td>'.$row["Title"].'</td><td>'.$row["Name"].'</td><td>'.$row["Medium"].'</td><td>'.$row["DateText"].'</td></tr>';
-		}
-		echo '</table>';
+	
+	if($general == '' and !$infos[0] and !$infos[1] /* and !$infos[2] */) {
+		$query ='	SELECT Title, Name, Medium, DateText
+					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+					GROUP BY Name
+				;';
 	} else {
-		echo "no results";
+		if($infos[0]) {
+			if($name == '')
+				$name = '%';
+			if($places == '')
+				$places = '%';
+			if($artist_year == '')
+				$artist_year = '%';
+			
+			$query =   'SELECT DISTINCT Name, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath
+						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+						WHERE Name LIKE "'.$name.'%"
+						AND (PlaceOfBirth LIKE "'.$places.'%" OR PlaceOfDeath LIKE "'.$places.'%")
+						AND (YearOfBirth == "'.$artist_year.'" OR YearOfDeath == "'.$artist_year.'")
+						;'; // Da testare!
+			}
+
+
 	}
 	
-	// DEFAULT - verrà eseguita per visualizzare tutto:
+	/* // DEFAULT - verrà eseguita per visualizzare tutto:
 	// eseguita per la tab All (anche in caso di parametri di ricerca)
 	$query ='	SELECT Title, Name, Medium, DateText
 				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
@@ -97,7 +106,28 @@
 		echo "no results";
 	}
 
-	// ALL ARTISTS
+	// Testing
+	// SELECTED ARTWORKS - eseguita per visualizzare opere d'arte inerenti
+	// eseguita per la tab Artworks
+	$query ='	SELECT Title, Name, Medium, DateText
+				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+				WHERE Title LIKE "'.$general.'%"
+				ORDER BY Title ASC
+			;';	
+
+	echo '<br><br><h2> Selected artworks </h2><br><br>';
+	$result = $link->query($query);
+	if($result->num_rows > 0) {
+		echo '<table><tr><th>Title</th><th>Name</th><th>Medium</th><th>DateText</th></tr>';
+		while($row = $result->fetch_assoc()) {
+			echo '<tr><td>'.$row["Title"].'</td><td>'.$row["Name"].'</td><td>'.$row["Medium"].'</td><td>'.$row["DateText"].'</td></tr>';
+		}
+		echo '</table>';
+	} else {
+		echo "no results";
+	}
+ */
+	/* // ALL ARTISTS
 	$query ='   SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath 
 				FROM Artist 
 			';
@@ -111,7 +141,7 @@
 		echo '</table>';
 	} else {
 		echo "no results";
-	} 
+	}  */
 	
 	
 	$link->close();
