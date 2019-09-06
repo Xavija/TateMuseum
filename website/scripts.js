@@ -30,3 +30,18 @@ function activateTab(pageId, id) {
         }
     }
 }
+
+function SearchTabsJS(pageId, id) {
+    document.getElementById("4").className = "";
+    document.getElementById("5").className = "";
+    document.getElementById(id).className = "is-active";
+
+    var pageToActivate = document.getElementById(pageId);
+    var tabCtrl = document.getElementById("SearchTabs");
+    for (var i = 0; i < tabCtrl.childNodes.length; i++) {
+        var node = tabCtrl.childNodes[i];
+        if (node.nodeType == 1) {
+            node.style.display = node == pageToActivate ? "block" : "none";
+        }
+    }
+}
