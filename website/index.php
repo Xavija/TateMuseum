@@ -13,8 +13,8 @@
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<?php
 			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
+			$user	= "phil";
+			$pass 	= "";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -40,7 +40,22 @@
 			$artist_role	= $_GET["artistRole"];
 			
 			if($general != '' and !$infos[0] and !$infos[1]) {
-				// TODO solo general
+				// query #1: artwork
+				$query ='	SELECT Title, Name, Medium, ArtistRole, DateText
+				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+				WHERE Title LIKE "'.$general.'%"
+				ORDER BY Title ASC;';	
+				$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'DateText',);
+				
+				// query #2: artista
+				$query ='	SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
+				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+				WHERE Title LIKE "'.$general.'%"
+				ORDER BY Title ASC;';
+				$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+				
+				$fields = array($fields1, $fields2);
+				$query_count = 2; 
 			}
 			else {
 				if($general == '' and !$infos[0] and !$infos[1]) {
@@ -57,6 +72,10 @@
 						ORDER BY Artist.Name<br>
 						LIMIT 50
 					;';
+
+					$query_count = 1;
+					$fields = array($fields);
+
 				}
 				else {
 					if($infos[0]) {
@@ -81,6 +100,9 @@
 							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")<br>
 							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
 						;';
+						$query_count = 1;
+						$fields = array($fields);
+
 					}
 					if($infos[1]) {
 						if($title == '') $title = '%';
@@ -107,6 +129,9 @@
 							AND Inscription LIKE "%'.$inscription.'%"<br>
 							AND ArtistRole LIKE "%'.$artist_role.'%"
 						;';
+						$query_count = 1;
+						$fields = array($fields);
+
 					}
 					if($infos[0] and $infos[1]) {
 						if($artist_name == '') $artist_name = '%';
@@ -145,6 +170,10 @@
 							AND Inscription LIKE "%'.$inscription.'%"<br>
 							AND ArtistRole LIKE "%'.$artist_role.'%"
 						;';
+						$query_count = 1;
+						$fields = array($fields);
+
+
 					}
 				}
 			}
@@ -276,20 +305,23 @@
 			<div id="tabCtrl">
 				<div id="tab1div" style="display: block; ">
 					<?php
-					$result = $link->query($query);
-					if($result->num_rows > 0){ 
-						echo '<table border="2"><tr>';
-						for($i = 0; $i<count($fields); $i++)
-							echo '<td>' .$fields[$i]. '</td>';
+					
+					for($j = 0; $j < $query_count; $j++) {
+						$result = $link->query($query);
+						if($result->num_rows > 0){ 
+							echo '<table border="2"><tr>';
+							for($i = 0; $i<count($fields[$j]); $i++)
+								echo '<td>' .$fields[$j][$i]. '</td>';
 
-						while($row = $result->fetch_assoc()) {
-							echo '</tr><tr>';
-							for($i = 0; $i<count($fields); $i++)
-								echo '<td>' .$row[$fields[$i]]. '</td>';
+							while($row = $result->fetch_assoc()) {
+								echo '</tr><tr>';
+								for($i = 0; $i<count($fields[$j]); $i++)
+									echo '<td>' .$row[$fields[$j][$i]]. '</td>';
+							}
+							echo '</tr></table>';
 						}
-						echo '</tr></table>';
+						else echo 'Internal Error OR Empty Result<br><br>';
 					}
-					else echo 'Internal Error OR Empty Result<br><br>';
 
 					$link->close();
 					?>
