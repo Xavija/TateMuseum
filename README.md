@@ -26,11 +26,11 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 
 ## ToDo
 
-- Integrazione `connessione.php` e `index.html` (unica pagina)
+- ~~Integrazione `connessione.php` e `index.html` (unica pagina)~~
 - Query:
   - prevenzione SQL injection
-  - report(s)
-  - visualizzazione risultati
+  - ~~report(s)~~
+  - ~~visualizzazione risultati~~
 - Visualizzazione in tabella
   - thumbnail e url
 - ~~Integrare valori checkbox in php~~
