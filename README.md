@@ -34,4 +34,5 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - Visualizzazione in tabella
   - thumbnail e url
 - ~~Integrare valori checkbox in php~~
+- Completare l'integrazione dei menù drop down
 
