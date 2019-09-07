@@ -29,10 +29,20 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Integrazione `connessione.php` e `index.html` (unica pagina)~~
 - Query:
   - prevenzione SQL injection
-  - ~~report(s)~~
+  - report(s)
   - ~~visualizzazione risultati~~
 - Visualizzazione in tabella
   - thumbnail e url
 - ~~Integrare valori checkbox in php~~
 - Completare l'integrazione dei menù drop down
+- Headers effettivi nella pagina
+- Calcolo di statistiche relativi ad artisti e opere
 
+
+
+- Michele
+  - tabella con scrollbar
+  - preparazione pagina per thumbnail e url
+- Phil
+  - report
+  - dropdown
