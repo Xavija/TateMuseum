@@ -41,7 +41,8 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 
 
 - Michele
-  - tabella con scrollbar
+  - ~~tabella con scrollbar~~
+  - fixare tabella scrollbar (bordo esterno con pochi elementi)
   - preparazione pagina per thumbnail e url
 - Phil
   - report
