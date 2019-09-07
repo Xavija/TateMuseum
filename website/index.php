@@ -6,15 +6,26 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 		<link rel="stylesheet" href="bulma.min.css">
-		<link rel="stylesheet" type="text/css" href="./style.css">
+		<link rel="stylesheet" type="text/css" href="./s.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="./scripts.js"></script>
+		<script type="text/javascript" src="./g.js"></script>
+		<title>index.php</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<?php
+			$id = $_GET["id"];
+			if($id) {
+				$divTable = 'style="display: none;"';
+				$divInfo = 'style="display: block;"';
+			}
+			else {
+				$divTable = 'style="display: block;"';
+				$divInfo = 'style="display: none;"';
+			}
+
 			$server = "localhost";
-			$user	= "phil";
-			$pass 	= "";
+			$user	= "michele";
+			$pass 	= "Aero";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -41,17 +52,21 @@
 			
 			if($general != '' and !$infos[0] and !$infos[1]) {
 				// query #1: artwork
-				$query ='	SELECT Title, Name, Medium, ArtistRole, DateText
-				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-				WHERE Title LIKE "'.$general.'%"
-				ORDER BY Title ASC;';	
+				$query ='
+					SELECT Title, Name, Medium, ArtistRole, DateText, Artwork.ThumbnailUrl, Artwork.ID ID
+					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+					WHERE Title LIKE "'.$general.'%"
+					ORDER BY Title ASC;
+				';	
 				$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'DateText',);
 				
 				// query #2: artista
-				$query ='	SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
-				FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-				WHERE Title LIKE "'.$general.'%"
-				ORDER BY Title ASC;';
+				$query ='
+					SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
+					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+					WHERE Title LIKE "'.$general.'%"
+					ORDER BY Title ASC
+				;';
 				$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 				
 				$fields = array($fields1, $fields2);
@@ -61,7 +76,7 @@
 				if($general == '' and !$infos[0] and !$infos[1]) {
 					$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
 					$query ='
-						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender
+						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID
 						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 						ORDER BY Artist.Name
 						LIMIT 50;
@@ -112,7 +127,7 @@
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
 						$query = '
-							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name
+							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name, Artwork.ThumbnailUrl, Artwork.ID ID
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							WHERE Title LIKE "%'.$title.'%"
 							AND Year LIKE "%'.$artwork_year.'%"
@@ -145,7 +160,7 @@
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 						$query = '
-							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath
+							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							WHERE Name LIKE "%'.$artist_name.'%"
 							AND Gender LIKE "'.$gender.'"
@@ -305,25 +320,27 @@
 			<div id="tabCtrl">
 				<div id="tab1div" style="display: block; ">
 					<?php
-					
-					for($j = 0; $j < $query_count; $j++) {
-						$result = $link->query($query);
-						if($result->num_rows > 0){ 
-							echo '<table border="2"><tr>';
-							for($i = 0; $i<count($fields[$j]); $i++)
-								echo '<td>' .$fields[$j][$i]. '</td>';
-
-							while($row = $result->fetch_assoc()) {
-								echo '</tr><tr>';
+						for($j = 0; $j < $query_count; $j++) {
+							$result = $link->query($query);
+							if($result->num_rows > 0){
+								echo '<table border="2"><tr>';
 								for($i = 0; $i<count($fields[$j]); $i++)
-									echo '<td>' .$row[$fields[$j][$i]]. '</td>';
-							}
-							echo '</tr></table>';
-						}
-						else echo 'Internal Error OR Empty Result<br><br>';
-					}
+									echo '<td>' .$fields[$j][$i]. '</td>';
 
-					$link->close();
+								while($row = $result->fetch_assoc()) {
+									echo '</tr><tr>';
+									for($i = 0; $i<count($fields[$j]); $i++)
+										if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
+											echo '<td><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+										}
+										else {
+											echo '<td>' .$row[$fields[$j][$i]]. '</td>';
+										}
+								}
+								echo '</tr></table>';
+							}
+							else echo 'Internal Error OR Empty Result<br><br>';
+						}
 					?>
 				</div>
 
@@ -351,6 +368,33 @@
 						echo 'Opera - Ruolo Artista: '	. $artist_role .				'<br>';
 					?>
 				</div>
+			</div>
+		</div>
+
+		<div class="split right" <?php echo $divInfo?>>
+			<div style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
+				<br>
+				<?php
+					$query = '
+						SELECT Title, Artist, ArtistRole, Medium, Year, ThumbnailUrl, url
+						FROM Artwork
+						WHERE ID = ' .$id. '
+					;';
+					$result = $link->query($query)->fetch_assoc();
+
+					$link->close();
+
+					echo '
+						<center><img src="' .$result["ThumbnailUrl"]. '"><br>
+						Title: ' .$result["Title"]. '<br>
+						Artist: ' .$result["Artist"]. ' (Role: ' .$result["ArtistRole"]. ')<br>
+						Medium: ' .$result["Medium"]. '<br>
+						Year: ' .$result["Year"]. '<br>
+						</center><br><br>
+						Torna alla <a href="index.php">home</a><br>
+						Pagina ufficiale: <a href="' .$result["url"]. '">TATE</a>
+					';
+				?>
 			</div>
 		</div>
 	</body>
