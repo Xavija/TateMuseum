@@ -81,12 +81,6 @@
 						ORDER BY Artist.Name
 						LIMIT 50;
 					';
-					$debugQuery = '
-						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender<br>
-						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId<br>
-						ORDER BY Artist.Name<br>
-						LIMIT 50
-					;';
 
 					$query_count = 1;
 					$fields = array($fields);
@@ -107,14 +101,7 @@
 							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
 							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
 						;';
-						$debugQuery = '
-							SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath<br>
-							FROM Artist<br>
-							WHERE Name LIKE "%'.$artist_name.'%"<br>
-							AND Gender LIKE "'.$gender.'"<br>
-							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")<br>
-							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
-						;';
+						
 						$query_count = 1;
 						$fields = array($fields);
 
@@ -135,15 +122,7 @@
 							AND Inscription LIKE "%'.$inscription.'%"
 							AND ArtistRole LIKE "%'.$artist_role.'%"
 						;';
-						$debugQuery = '
-							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name<br>
-							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId<br>
-							WHERE Title LIKE "%'.$title.'%"<br>
-							AND Year LIKE "%'.$artwork_year.'%"<br>
-							AND Medium LIKE "%'.$medium.'%"<br>
-							AND Inscription LIKE "%'.$inscription.'%"<br>
-							AND ArtistRole LIKE "%'.$artist_role.'%"
-						;';
+						
 						$query_count = 1;
 						$fields = array($fields);
 
@@ -172,19 +151,7 @@
 							AND Inscription LIKE "%'.$inscription.'%"
 							AND ArtistRole LIKE "%'.$artist_role.'%"
 						;';
-						$debugQuery = '
-							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath<br>
-							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId<br>
-							WHERE Name LIKE "%'.$artist_name.'%"<br>
-							AND Gender LIKE "'.$gender.'"<br>
-							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")<br>
-							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")<br>
-							AND Title LIKE "%'.$title.'%"<br>
-							AND Year LIKE "%'.$artwork_year.'%"<br>
-							AND Medium LIKE "%'.$medium.'%"<br>
-							AND Inscription LIKE "%'.$inscription.'%"<br>
-							AND ArtistRole LIKE "%'.$artist_role.'%"
-						;';
+						
 						$query_count = 1;
 						$fields = array($fields);
 
@@ -295,80 +262,29 @@
 
 		<div class="split right">
 			<br>
-			<div class="tabs is-toggle is-centered ">
-				<ul>
-					<li class="is-active" id="1">
-						<a href="javascript:activateTab( 'tab1div', '1') ">
-							<span class="icon is-small "><i class="fas "></i></span>
-							<span>Tabella</span>
-						</a>
-					</li>
-					<li class="" id="2">
-						<a href="javascript:activateTab( 'tab2div', '2') ">
-							<span class="icon is-small "><i class="fas "></i></span>
-							<span>Query</span>
-						</a>
-					</li>
-						<li class="" id="3">
-						<a href="javascript:activateTab( 'tab3div', '3') ">
-							<span class="icon is-small "><i class="fas "></i></span>
-							<span>Data</span>
-						</a>
-					</li>
-				</ul>
-			</div>
-			<div id="tabCtrl">
-				<div id="tab1div" style="display: block; ">
-					<?php
-						for($j = 0; $j < $query_count; $j++) {
-							$result = $link->query($query);
-							if($result->num_rows > 0){
-								echo '<table border="2"><tr>';
-								for($i = 0; $i<count($fields[$j]); $i++)
-									echo '<td>' .$fields[$j][$i]. '</td>';
+			<?php
+				for($j = 0; $j < $query_count; $j++) {
+					$result = $link->query($query);
+					if($result->num_rows > 0){
+						echo '<table class="table" border="2"><tr>';
+						for($i = 0; $i<count($fields[$j]); $i++)
+							echo '<td>' .$fields[$j][$i]. '</td>';
 
-								while($row = $result->fetch_assoc()) {
-									echo '</tr><tr>';
-									for($i = 0; $i<count($fields[$j]); $i++)
-										if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
-											echo '<td><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
-										}
-										else {
-											echo '<td>' .$row[$fields[$j][$i]]. '</td>';
-										}
+						while($row = $result->fetch_assoc()) {
+							echo '</tr><tr>';
+							for($i = 0; $i<count($fields[$j]); $i++)
+								if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
+									echo '<td><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 								}
-								echo '</tr></table>';
-							}
-							else echo 'Internal Error OR Empty Result<br><br>';
+								else {
+									echo '<td>' .$row[$fields[$j][$i]]. '</td>';
+								}
 						}
-					?>
-				</div>
-
-				<div id="tab2div" style="display: none; ">
-					<?php
-						echo 'Query: <br><br>' . $debugQuery;
-					?>
-				</div>
-
-				<div id="tab3div" style="display: none; ">
-					<?php
-						echo 'General Info/Title: '. $general .'<br><br>';
-
-						echo 'Filtri Selezionati: '		. $infos[0] . ' ' . $infos[1] .	'<br><br>';
-
-						echo 'Artista - Nome: '			. $artist_name .				'<br>';
-						echo 'Artista - Luogo: '		. $places.						'<br>';
-						echo 'Artista - Anno: '			. $artist_year.					'<br>';
-						echo 'Artista - Genere: '		. $gender .						'<br><br>';
-
-						echo 'Opera - Titolo'			. $title .						'<br>';
-						echo 'Opera - Iscrizione: '		. $inscription .				'<br>';
-						echo 'Opera - Medium: '			. $medium .						'<br>';
-						echo 'Opera - Anno: '			. $artwork_year .				'<br>';
-						echo 'Opera - Ruolo Artista: '	. $artist_role .				'<br>';
-					?>
-				</div>
-			</div>
+						echo '</tr></table>';
+					}
+					else echo 'Internal Error OR Empty Result<br><br>';
+				}
+			?>
 		</div>
 
 		<div class="split right" <?php echo $divInfo?>>
