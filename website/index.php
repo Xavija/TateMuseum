@@ -6,25 +6,9 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 		<link rel="stylesheet" href="bulma.min.css">
-		<link rel="stylesheet" type="text/css" href="style.css">
+		<link rel="stylesheet" type="text/css" href="s.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="scripts.js"></script>
-		
-		<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
-		<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
-		<link rel="stylesheet" type="text/css" href="css/main.css">
-		<script src="vendor/jquery/jquery-3.2.1.min.js"></script>
-		<script src="vendor/perfect-scrollbar/perfect-scrollbar.min.js"></script>
-		<script>
-        $('.js-pscroll').each(function() {
-            var ps = new PerfectScrollbar(this);
-
-            $(window).on('resize', function() {
-                ps.update();
-            })
-        });
-   		</script>		
-		
+		<script type="text/javascript" src="g.js"></script>
 		<title>index.php</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
@@ -40,8 +24,8 @@
 			}
 
 			$server = "localhost";
-			$user	= "phil";
-			$pass 	= "";
+			$user	= "michele";
+			$pass 	= "Aero";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
