@@ -6,9 +6,9 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 		<link rel="stylesheet" href="bulma.min.css">
-		<link rel="stylesheet" type="text/css" href="s.css">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="g.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
 		<title>index.php</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
@@ -24,8 +24,8 @@
 			}
 
 			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
+			$user	= "phil";
+			$pass 	= "";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -278,7 +278,7 @@
 					if($result->num_rows > 0){
 						echo '<table class="table" border="2"><tr>';
 						for($i = 0; $i<count($fields[$j]); $i++)
-							echo '<td>' .$fields[$j][$i]. '</td>';
+							echo '<th>' .$fields[$j][$i]. '</th>';
 
 						while($row = $result->fetch_assoc()) {
 							echo '</tr><tr>';
