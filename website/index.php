@@ -86,7 +86,6 @@
 
 					$query_count = 1;
 					$fields = array($fields);
-
 				}
 				else {
 					if($infos[0]) {
@@ -156,8 +155,6 @@
 						
 						$query_count = 1;
 						$fields = array($fields);
-
-
 					}
 				}
 			}
@@ -371,4 +368,3 @@
 		</div>
 	</body>
 </html>
-
