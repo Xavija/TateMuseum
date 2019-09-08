@@ -6,11 +6,11 @@
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 		<link rel="stylesheet" href="bulma.min.css">
-		<link rel="stylesheet" href="./s.css">
-		<!-- <link rel="stylesheet" href="./table.css"> -->
+		<link rel="stylesheet" href="style.css">
+		<!-- <link rel="stylesheet" href="temp/table.css"> -->
 		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="g.js"></script>
+		<script type="text/javascript" src="scripts.js"></script>
 		<title>index.php</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
@@ -278,9 +278,8 @@
 				<?php
 					for($j = 0; $j < $query_count; $j++) {
 						$result = $link->query($query);
-						if($result->num_rows > 0) {
-							echo '<table cellpadding="0" cellspacing="0" width="100%" class="scrollTable">
-							<thead class="fixedHeader"><tr>';
+						if($result->num_rows >= 15) {
+							echo '<table cellpadding="0" cellspacing="0" width="100%" class="scrollTable"><thead class="fixedHeader"><tr>';
 							for($i = 0; $i<count($fields[$j]); $i++) {
 								echo '<th width="' .(100/count($fields[$j])). '%"><b>' .$fields[$j][$i]. '</b></th>';
 							}
@@ -307,7 +306,38 @@
 								$k++;
 							}
 							echo '</tbody></table>';
-						} else echo 'Internal Error OR Empty Result<br><br>';
+						} else {
+							if($result->num_rows > 0){
+								echo '<table cellpadding="0" cellspacing="0" width="100%"><thead><tr>';
+							for($i = 0; $i<count($fields[$j]); $i++) {
+								echo '<th width="' .(100/count($fields[$j])). '%" style="text-align: center;"><b>' .$fields[$j][$i]. '</b></th>';
+							}
+							echo '</tr></thead><tbody>';
+
+							$k = 0;
+							while($row = $result->fetch_assoc()) {
+								if($k % 2 != 0) {
+									echo '<tr class="alternateRow">';
+								}
+								else {
+									echo '<tr>';
+								}
+								
+								for($i = 0; $i<count($fields[$j]); $i++) {
+									if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
+										echo '<td width="' .(100/count($fields[$j])). '%"><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									}
+									else {
+										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+									}
+								}
+								echo '</tr>';
+								$k++;
+							}
+							echo '</tbody></table>';
+							}
+							else echo 'Internal Error OR Empty Result<br><br>';
+						}
 					}
 				?>
 			</div>
