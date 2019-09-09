@@ -7,7 +7,6 @@
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
 		<link rel="stylesheet" href="bulma.min.css">
 		<link rel="stylesheet" href="style.css">
-		<!-- <link rel="stylesheet" href="temp/table.css"> -->
 		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
 		<script type="text/javascript" src="scripts.js"></script>
@@ -15,16 +14,6 @@
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<?php
-			$id = $_GET["id"];
-			if($id) {
-				$divTable = 'style="display: none;"';
-				$divInfo = 'style="display: block;"';
-			}
-			else {
-				$divTable = 'style="display: block;"';
-				$divInfo = 'style="display: none;"';
-			}
-
 			$server = "localhost";
 			$user	= "michele";
 			$pass 	= "Aero";
@@ -184,8 +173,8 @@
 					<div id="guided" style="display: block;">
 						<b>Filters</b><br>
 						<div style="text-align: left;">
-							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true"> Artist
-							<div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
+							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true" checked> Artist
+							<div id="ArtistDiv" style="margin-bottom: -5%;">
 								<div class="control">
 									<input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="text" name="places" placeholder="Places" style="margin-bottom: 7px;">
@@ -292,11 +281,16 @@
 								}
 								
 								for($i = 0; $i<count($fields[$j]); $i++) {
-									if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
-										echo '<td width="' .(100/count($fields[$j])). '%"><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									if($fields[$j][$i] == "Title") {
+										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 									}
 									else {
-										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+										if($fields[$j][$i] == "Name") {
+											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+										}
+										else {
+											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+										}
 									}
 								}
 								echo '</tr>';
@@ -321,11 +315,16 @@
 								}
 								
 								for($i = 0; $i<count($fields[$j]); $i++) {
-									if($fields[$j][$i] == "Title" and $row["ThumbnailUrl"] != '') {
-										echo '<td width="' .(100/count($fields[$j])). '%"><a href="index.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									if($fields[$j][$i] == "Title") {
+										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 									}
 									else {
-										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+										if($fields[$j][$i] == "Name") {
+											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+										}
+										else {
+											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+										}
 									}
 								}
 								echo '</tr>';
@@ -336,33 +335,7 @@
 							else echo 'Internal Error OR Empty Result<br><br>';
 						}
 					}
-				?>
-			</div>
-		</div>
-
-		<div class="split right" <?php echo $divInfo?>>
-			<div style="position: absolute; top: 50%; left: 50%; margin-right: -50%; transform: translate(-50%, -50%);">
-				<br>
-				<?php
-					$query = '
-						SELECT Title, Artist, ArtistRole, Medium, Year, ThumbnailUrl, url
-						FROM Artwork
-						WHERE ID = ' .$id. '
-					;';
-					$result = $link->query($query)->fetch_assoc();
-
 					$link->close();
-
-					echo '
-						<center><img src="' .$result["ThumbnailUrl"]. '"><br>
-						Title: ' .$result["Title"]. '<br>
-						Artist: ' .$result["Artist"]. ' (Role: ' .$result["ArtistRole"]. ')<br>
-						Medium: ' .$result["Medium"]. '<br>
-						Year: ' .$result["Year"]. '<br>
-						</center><br><br>
-						Torna alla <a href="index.php">home</a><br>
-						Pagina ufficiale: <a href="' .$result["url"]. '">TATE</a>
-					';
 				?>
 			</div>
 		</div>

@@ -1,15 +1,10 @@
-$(document).ready(function() {
-    $("#ArtistInfo").change(function() {
+$(document).ready(function () {
+    $("#ArtistInfo").change(function () {
         if (this.checked) $("#ArtistDiv").fadeIn("slow");
         else $("#ArtistDiv").fadeOut("slow");
     });
 
-    $("#DatesInfo").change(function() {
-        if (this.checked) $("#DatesDiv").fadeIn("slow");
-        else $("#DatesDiv").fadeOut("slow");
-    });
-
-    $("#ArtworkInfo").change(function() {
+    $("#ArtworkInfo").change(function () {
         if (this.checked) $("#ArtworkDiv").fadeIn("slow");
         else $("#ArtworkDiv").fadeOut("slow");
     });

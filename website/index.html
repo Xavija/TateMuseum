@@ -3,7 +3,8 @@
 
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+        integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
     <link rel="stylesheet" href="bulma.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
@@ -15,21 +16,25 @@
     <div class="split left">
         <form action="connessione.php" method="get">
             <br><b> General Info</b>
-            <input class="input is-rounded is-focused" type="text" name="general" placeholder="Author/Artwork generic info" style="margin-top:4px; margin-bottom: 25px;"><br>
+            <input class="input is-rounded is-focused" type="text" name="general"
+                placeholder="Author/Artwork generic info" style="margin-top:4px; margin-bottom: 25px;"><br>
             <b>Filters</b><br>
             <div style="text-align: left;">
                 <input type="checkbox" id="ArtistInfo" name="artistInfo" value="true">Artist</input>
                 <div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
                     <div class="control">
-                        <input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
-                        <input class="input is-rounded is-focused" type="text" name="places" placeholder="Places" style="margin-bottom: 7px;">
-                        <input class="input is-rounded is-focused" type="number" min=0 name="artistYear" placeholder="Year Of birth/death" style="margin-top:4px; margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="text" name="name" placeholder="Name"
+                            style="margin-top:4px; margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="text" name="places" placeholder="Places"
+                            style="margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="number" min=0 name="artistYear"
+                            placeholder="Year Of birth/death" style="margin-top:4px; margin-bottom: 7px;">
                         <input type="radio" name="gender" value="all" checked> All<br>
                         <input type="radio" name="gender" value="Male"> Male<br>
                         <input type="radio" name="gender" value="Female"> Female
                     </div>
                 </div><br>
-<!-- 
+                <!-- 
                 <input type="checkbox" id="DatesInfo" name="datesInfo" value="true">Dates</input>
                 <div id="DatesDiv" style="margin-bottom: -5%;" hidden>
                     <div class="control">
@@ -41,16 +46,20 @@
                 <input type="checkbox" id="ArtworkInfo" name="artworkInfo" value="true">Artwork</input>
                 <div id="ArtworkDiv" style="margin-bottom: -1%;" hidden>
                     <div class="control">
-                        <input class="input is-rounded is-focused" type="text" name="inscription" placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
-                        <input class="input is-rounded is-focused" type="text" name="medium" placeholder="Medium" style="margin-bottom: 7px;">
-                        <input class="input is-rounded is-focused" type="number" min=0 name="artworkYear" placeholder="Artwork year" style="margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="text" name="inscription"
+                            placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="text" name="medium" placeholder="Medium"
+                            style="margin-bottom: 7px;">
+                        <input class="input is-rounded is-focused" type="number" min=0 name="artworkYear"
+                            placeholder="Artwork year" style="margin-bottom: 7px;">
                         <input type="radio" name="artistRole" value="all" checked> All<br>
                         <input type="radio" name="artistRole" value="artist"> Artist<br>
                         <input type="radio" name="artistRole" value="attributed to"> Attributed to<br>
                         <input type="radio" name="artistRole" value="after"> After<br>
                         <input type="radio" name="artistRole" value="manner of"> Manner of<br>
                         <input type="radio" name="artistRole" value="formerly attributed to"> Formerly attributed to<br>
-                        <input type="radio" name="artistRole" value="doubtfully attributed to"> Doubtfully attributed to<br>
+                        <input type="radio" name="artistRole" value="doubtfully attributed to"> Doubtfully attributed
+                        to<br>
                         <input type="radio" name="artistRole" value="circle of"> Circle of<br>
                         <input type="radio" name="artistRole" value="prints after"> Prints after<br>
                         <input type="radio" name="artistRole" value="studio of"> Studio of<br>
@@ -72,27 +81,29 @@
                 Order by:
                 <div class="dropdown is-left">
                     <div class="dropdown-trigger">
-                        <button id="sortOrder" type="button" class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-							<span>A - Z</span>
-							<span class="icon is-small">
-								<i class="fas fa-angle-down" aria-hidden="true"></i>
-							</span>
-						</button>
+                        <button id="sortOrder" type="button" class="button" aria-haspopup="true"
+                            aria-controls="dropdown-menu3">
+                            <span>A - Z</span>
+                            <span class="icon is-small">
+                                <i class="fas fa-angle-down" aria-hidden="true"></i>
+                            </span>
+                        </button>
                     </div>
                     <div class="dropdown-menu" id="dropdown-menu3" role="menu">
                         <div class="dropdown-content">
                             <a href="#" class="dropdown-item">
-								A - Z
-							</a>
-                            <a href="#" class="dropdown-item" >
-								Z - A
-							</a>
+                                A - Z
+                            </a>
+                            <a href="#" class="dropdown-item">
+                                Z - A
+                            </a>
                         </div>
                     </div>
                 </div>
             </div>
             <br>
-            <button class="button is-primary is-rounded is-medium" type="submit" style="margin-bottom: 5%;">Search</button>
+            <button class="button is-primary is-rounded is-medium" type="submit"
+                style="margin-bottom: 5%;">Search</button>
         </form>
     </div>
 
@@ -103,41 +114,41 @@
                 <li class="is-active " id="1">
                     <a href="javascript:activateTab( 'tab1div', '1') ">
                         <span class="icon is-small ">
-							<i class="fas " aria-hidden="true "></i>
-						</span>
+                            <i class="fas " aria-hidden="true "></i>
+                        </span>
                         <span>
-							<centre>Tab 1</centre>
-						</span>
+                            <centre>Tab 1</centre>
+                        </span>
                     </a>
                 </li>
                 <li class=" " id="2">
                     <a href="javascript:activateTab( 'tab2div', '2') ">
                         <span class="icon is-small ">
-							<i class="fas "></i>
-						</span>
+                            <i class="fas "></i>
+                        </span>
                         <span>
-							<centre>Tab 2</centre>
-						</span>
+                            <centre>Tab 2</centre>
+                        </span>
                     </a>
                 </li>
                 <li class=" " id="3">
                     <a href="javascript:activateTab( 'tab3div', '3') ">
                         <span class="icon is-small ">
-							<i class="fas "></i>
-						</span>
+                            <i class="fas "></i>
+                        </span>
                         <span>
-							<centre>Tab 3</centre>
-						</span>
+                            <centre>Tab 3</centre>
+                        </span>
                     </a>
                 </li>
                 <li class=" " id="4">
                     <a href="javascript:activateTab( 'tab4div', '4') ">
                         <span class="icon is-small ">
-							<i class="fas "></i>
-						</span>
+                            <i class="fas "></i>
+                        </span>
                         <span>
-							<centre>Tab 4</centre>
-						</span>
+                            <centre>Tab 4</centre>
+                        </span>
                     </a>
                 </li>
             </ul>
