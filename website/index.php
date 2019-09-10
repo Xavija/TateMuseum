@@ -44,7 +44,7 @@
 			if($general != '' and !$infos[0] and !$infos[1]) {
 				// query #1: artwork
 				$query ='
-					SELECT Title, Name, Medium, ArtistRole, DateText, Artwork.ThumbnailUrl, Artwork.ID ID
+					SELECT Title, Name, Medium, ArtistRole, DateText, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Title LIKE "'.$general.'%"
 					ORDER BY Title ASC;
@@ -53,7 +53,7 @@
 				
 				// query #2: artista
 				$query ='
-					SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
+					SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Title LIKE "'.$general.'%"
 					ORDER BY Title ASC
@@ -67,7 +67,7 @@
 				if($general == '' and !$infos[0] and !$infos[1]) {
 					$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
 					$query ='
-						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID
+						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 						ORDER BY Artist.Name
 						LIMIT 200;
@@ -84,7 +84,7 @@
 
 						$fields = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 						$query = '
-							SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath
+							SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artist.ID IDA
 							FROM Artist
 							WHERE Name LIKE "%'.$artist_name.'%"
 							AND Gender LIKE "'.$gender.'"
@@ -104,7 +104,7 @@
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
 						$query = '
-							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name, Artwork.ThumbnailUrl, Artwork.ID ID
+							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							WHERE Title LIKE "%'.$title.'%"
 							AND Year LIKE "%'.$artwork_year.'%"
@@ -129,7 +129,7 @@
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 						$query = '
-							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID
+							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							WHERE Name LIKE "%'.$artist_name.'%"
 							AND Gender LIKE "'.$gender.'"
@@ -271,8 +271,7 @@
 							}
 							echo '</tr></thead><tbody class="scrollContent">';
 
-							$k = 0;
-							while($row = $result->fetch_assoc()) {
+							for($k = 0; $row = $result->fetch_assoc(); $k++) {
 								if($k % 2 != 0) {
 									echo '<tr class="alternateRow">';
 								}
@@ -286,7 +285,7 @@
 									}
 									else {
 										if($fields[$j][$i] == "Name") {
-											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 										}
 										else {
 											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
@@ -294,10 +293,10 @@
 									}
 								}
 								echo '</tr>';
-								$k++;
 							}
 							echo '</tbody></table>';
-						} else {
+						}
+						else {
 							if($result->num_rows > 0){
 								echo '<table cellpadding="0" cellspacing="0" width="100%"><thead><tr>';
 							for($i = 0; $i<count($fields[$j]); $i++) {
@@ -320,7 +319,7 @@
 									}
 									else {
 										if($fields[$j][$i] == "Name") {
-											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 										}
 										else {
 											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
