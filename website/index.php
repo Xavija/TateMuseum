@@ -53,7 +53,7 @@
 			$order			= $_GET["order"];
 			
 			if($id) {
-				$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name');
+				$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name');
 				$query = '
 					SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 					FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
@@ -62,7 +62,7 @@
 				;';
 				
 				$query_count = 1;
-				$fields = array($fields);
+				$fields = array($fields1);
 			}
 			else {
 				if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
@@ -89,7 +89,7 @@
 				}
 				else {
 					if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
-						$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
+						$fields1 = array('Title', 'Year', 'Medium', 'Name', 'Gender');
 						$query ='
 							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
@@ -98,16 +98,16 @@
 						';
 
 						$query_count = 1;
-						$fields = array($fields);
+						$fields = array($fields1);
 					}
 					else {
 						if($infos[0]) {	// ricerca gudata, artista
 							if($artist_name == '') $artist_name = '%';
 							if($places == '') $places = '%';
 							if($artist_year == '') $artist_year = '%';
-							if($gender == 'all') $gender = '%';
+							if($gender == '') $gender = '%';
 
-							$fields = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$fields1 = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
 								SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artist.ID IDA
 								FROM Artist
@@ -119,7 +119,7 @@
 							;';
 							
 							$query_count = 1;
-							$fields = array($fields);
+							$fields = array($fields1);
 
 						}
 						if($infos[1]) {  // ricerca guidata, artwork
@@ -129,7 +129,7 @@
 							if($artwork_year == '') $artwork_year = '%';
 							if($artist_role == 'all') $artist_role = '%';
 
-							$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
 							$query = '
 								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
@@ -142,7 +142,7 @@
 							;';
 							
 							$query_count = 1;
-							$fields = array($fields);
+							$fields = array($fields1);
 
 						}
 						if($infos[0] and $infos[1]) {  // ricerca guidata, artista + artwork
@@ -155,9 +155,9 @@
 							if($medium == '') $medium = '%';
 							if($artwork_year == '') $artwork_year = '%';
 
-							if($gender == 'all') $gender = '%';
+							if($gender == '') $gender = '%';
 
-							$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
 								SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
@@ -174,7 +174,7 @@
 							;';
 							
 							$query_count = 1;
-							$fields = array($fields);
+							$fields = array($fields1);
 						}
 					}
 				}
@@ -330,8 +330,7 @@
 							}
 							echo '</tr></thead><tbody>';
 
-							$k = 0;
-							while($row = $result->fetch_assoc()) {
+							for($k = 0; $row = $result->fetch_assoc(); $k++) {
 								if($k % 2 != 0) {
 									echo '<tr class="alternateRow">';
 								}
@@ -353,11 +352,10 @@
 									}
 								}
 								echo '</tr>';
-								$k++;
 							}
 							echo '</tbody></table>';
 							}
-							else echo 'Internal Error OR Empty Result<br><br>';
+							else echo 'Internal Error OR Empty Result<br><br>' .$query;
 						}
 					}
 					$link->close();
