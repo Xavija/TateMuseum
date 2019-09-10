@@ -291,6 +291,7 @@
 					for($j = 0; $j < $query_count; $j++) {
 						$result = $link->query($query);
 						if($result->num_rows >= 15) {
+							echo 'Total: ' .$result->num_rows;
 							echo '<table cellpadding="0" cellspacing="0" width="100%" class="scrollTable"><thead class="fixedHeader"><tr>';
 							for($i = 0; $i<count($fields[$j]); $i++) {
 								echo '<th width="' .(100/count($fields[$j])). '%"><b>' .$fields[$j][$i]. '</b></th>';
