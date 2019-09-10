@@ -35,7 +35,7 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
   - ~~thumbnail e url~~
 - ~~Integrare valori checkbox in php~~
 - Completare l'integrazione dei menù drop down
-- Headers effettivi nella pagina
+- ~~Headers effettivi nella pagina~~
 - Calcolo di statistiche relativi ad artisti e opere
 
 
