@@ -34,7 +34,7 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Visualizzazione in tabella~~
   - ~~thumbnail e url~~
 - ~~Integrare valori checkbox in php~~
-- Completare l'integrazione dei menù drop down
+- ~~Completare l'integrazione dei menù drop down~~
 - ~~Headers effettivi nella pagina~~
 - Calcolo di statistiche relativi ad artisti e opere
 
@@ -48,3 +48,4 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - Phil
   - report
   - ~~dropdown~~
+
