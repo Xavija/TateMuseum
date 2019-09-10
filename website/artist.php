@@ -26,14 +26,14 @@
 			}
 			$id = $_GET["id"];
 
-			if($id) {
-				$query1 ='
+			if($id) {			// Artist.IDs
+				$query1 ='			
 					SELECT *
 					FROM Artist
 					WHERE ID = '.$id.'
 				;';	
 				$fields1 = array('ID', 'Name', 'Gender', 'Dates', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
-				
+								// Artist.IDs ordinati per anno crescente
 				$query2 ='
 					SELECT *
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
@@ -41,11 +41,18 @@
 					ORDER BY Year ASC
 				;';
 				$fields2 = array('Title', 'ArtistRole', 'Medium', 'Year');
+								// Numero di opere per artista
+				$query3 = '
+					SELECT COUNT(Artwork.ID) AS Num
+					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+					WHERE Artist.ID = '.$id.'
+				;';
+				$fields3 = array("Num");
 				
-				$fields = array($fields1, $fields2);
+				$fields = array($fields1, $fields2, $fields3);
 			}
 			else {
-				echo 'Errore durante la ricenzione dei dati.';
+				echo 'Errore durante la ricezione dei dati.';
 			}
 
 			$result = $link->query($query1);
@@ -60,38 +67,38 @@
 				echo '<br>';
 
 				if(!$result["YearOfBirth"] and !$result["PlaceOfBirth"]) {
-					echo 'Birth info: no informations<br>';
+					echo 'Birth: no information<br>';
 				}
 				else {
 					if($result["YearOfBirth"]) {
 						echo 'Birth info: ' .$result["YearOfBirth"];
 					}
 					else {
-						echo 'Birth info: Year missing';
+						echo 'Birth info: missing year';
 					}
 					if($result["PlaceOfBirth"]) {
 						echo ' (in ' .$result["PlaceOfBirth"]. ')<br>';
 					}
 					else {
-						echo ' (place missing)<br>';
+						echo ' (missing place)<br>';
 					}
 				}
 
 				if(!$result["YearOfDeath"] and !$result["PlaceOfDeath"]) {
-					echo 'Death info: no informations<br>';
+					echo 'Death: no information<br>';
 				}
 				else {
 					if($result["YearOfDeath"]) {
 						echo 'Death info: ' .$result["YearOfDeath"];
 					}
 					else {
-						echo 'Death info: Year missing';
+						echo 'Death info: missing year';
 					}
 					if($result["PlaceOfDeath"]) {
 						echo ' (in ' .$result["PlaceOfDeath"]. ')<br>';
 					}
 					else {
-						echo ' (place missing)<br>';
+						echo ' (missing place)<br>';
 					}
 				}
 
@@ -104,7 +111,13 @@
 				">tutte le opere</a>';
 				echo '<br>Torna alla <a href="index.php">home</a>';
 				if($result["url"])
-					echo '<br>Visita la pagina del <a href="' .$result["url"]. '">sito uffuciale</a>';
+					echo '<br>Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
+			}
+
+			$result = $link->query($query3);
+			if($result->num_rows > 0) {
+				$result = $result->fetch_assoc();
+				echo '<p>Questo artista ha realizzato '.$result[$fields3[0]].' opere.<br></p>';
 			}
 			$link->close();
 		?>

@@ -74,7 +74,7 @@
 
 				echo '<br>Torna alla <a href="index.php">home</a>';
 				if($result["url"])
-					echo '<br>Visita la pagina del <a href="' .$result["url"]. '">sito uffuciale</a>';
+					echo '<br>Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
 				echo '</div>';
 			}
 			else echo 'Internal Error OR Empty Result<br><br>';

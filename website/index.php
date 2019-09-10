@@ -40,23 +40,26 @@
 			$medium			= $_GET["medium"];
 			$artwork_year	= strval($_GET["artworkYear"]);
 			$artist_role	= $_GET["artistRole"];
+
+			// options:
+			$order			= $_GET["order"];
 			
-			if($general != '' and !$infos[0] and !$infos[1]) {
+			if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
 				// query #1: artwork
 				$query ='
-					SELECT Title, Name, Medium, ArtistRole, DateText, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+					SELECT Title, Name, Medium, ArtistRole, Year, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Title LIKE "'.$general.'%"
-					ORDER BY Title ASC;
+					ORDER BY Title '.$order.';
 				';	
-				$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'DateText',);
+				$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'Year',);
 				
 				// query #2: artista
 				$query ='
 					SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Title LIKE "'.$general.'%"
-					ORDER BY Title ASC
+					ORDER BY Title '.$order.'
 				;';
 				$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 				
@@ -64,12 +67,12 @@
 				$query_count = 2; 
 			}
 			else {
-				if($general == '' and !$infos[0] and !$infos[1]) {
+				if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
 					$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
 					$query ='
 						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
-						ORDER BY Artist.Name
+						ORDER BY Artwork.Title '.$order.'
 						LIMIT 200;
 					';
 
@@ -77,10 +80,11 @@
 					$fields = array($fields);
 				}
 				else {
-					if($infos[0]) {
+					if($infos[0]) {	// ricerca gudata, artista
 						if($artist_name == '') $artist_name = '%';
 						if($places == '') $places = '%';
 						if($artist_year == '') $artist_year = '%';
+						if($gender == 'all') $gender = '%';
 
 						$fields = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 						$query = '
@@ -90,17 +94,19 @@
 							AND Gender LIKE "'.$gender.'"
 							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
 							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
+							ORDER BY Name '.$order.'
 						;';
 						
 						$query_count = 1;
 						$fields = array($fields);
 
 					}
-					if($infos[1]) {
+					if($infos[1]) {  // ricerca guidata, artwork
 						if($title == '') $title = '%';
 						if($inscription == '') $inscription = '%';
 						if($medium == '') $medium = '%';
 						if($artwork_year == '') $artwork_year = '%';
+						if($artist_role == 'all') $artist_role = '%';
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
 						$query = '
@@ -111,13 +117,14 @@
 							AND Medium LIKE "%'.$medium.'%"
 							AND Inscription LIKE "%'.$inscription.'%"
 							AND ArtistRole LIKE "%'.$artist_role.'%"
+							ORDER BY Title '.$order.'
 						;';
 						
 						$query_count = 1;
 						$fields = array($fields);
 
 					}
-					if($infos[0] and $infos[1]) {
+					if($infos[0] and $infos[1]) {  // ricerca guidata, artista + artwork
 						if($artist_name == '') $artist_name = '%';
 						if($places == '') $places = '%';
 						if($artist_year == '') $artist_year = '%';
@@ -126,6 +133,8 @@
 						if($inscription == '') $inscription = '%';
 						if($medium == '') $medium = '%';
 						if($artwork_year == '') $artwork_year = '%';
+
+						if($gender == 'all') $gender = '%';
 
 						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 						$query = '
@@ -140,6 +149,7 @@
 							AND Medium LIKE "%'.$medium.'%"
 							AND Inscription LIKE "%'.$inscription.'%"
 							AND ArtistRole LIKE "%'.$artist_role.'%"
+							ORDER BY Title '.$order.'
 						;';
 						
 						$query_count = 1;
@@ -180,9 +190,18 @@
 									<input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="text" name="places" placeholder="Places" style="margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="number" min=0 name="artistYear" placeholder="Year Of birth/death" style="margin-top:4px; margin-bottom: 7px;">
-									<input type="radio" name="gender" value="%" checked> All<br>
-									<input type="radio" name="gender" value="Male"> Male<br>
-									<input type="radio" name="gender" value="Female"> Female
+									<div class="field">
+										<label class="label">Gender</label>
+										<div class="control">
+											<div class="select">
+											<select>
+												<option value="all">All</option>
+												<option value="male">Male</option>
+												<option value="female">Female</option>
+											</select>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 							<br>
@@ -193,25 +212,24 @@
 									<input class="input is-rounded is-focused" type="text" name="inscription" placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="text" name="medium" placeholder="Medium" style="margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="number" min=0 name="artworkYear" placeholder="Artwork year" style="margin-bottom: 7px;">
-									<input type="radio" name="artistRole" value="%" checked> All<br>
-									<input type="radio" name="artistRole" value="artist"> Artist<br>
-									<input type="radio" name="artistRole" value="attributed to"> Attributed to<br>
-									<input type="radio" name="artistRole" value="after"> After<br>
-									<input type="radio" name="artistRole" value="manner of"> Manner of<br>
-									<input type="radio" name="artistRole" value="formerly attributed to"> Formerly attributed to<br>
-									<input type="radio" name="artistRole" value="doubtfully attributed to"> Doubtfully attributed to<br>
-									<input type="radio" name="artistRole" value="circle of"> Circle of<br>
-									<input type="radio" name="artistRole" value="prints after"> Prints after<br>
-									<input type="radio" name="artistRole" value="studio of"> Studio of<br>
-									<input type="radio" name="artistRole" value="and studio"> And studio<br>
-									<input type="radio" name="artistRole" value="follower of"> Follower of<br>
-									<input type="radio" name="artistRole" value="and assistants"> And assistants<br>
-									<input type="radio" name="artistRole" value="and a pupil"> And a pupil<br>
-									<input type="radio" name="artistRole" value="school of"> School of<br>
-									<input type="radio" name="artistRole" value="imitator of"> Imitator of<br>
-									<input type="radio" name="artistRole" value="style of"> Style of<br>
-									<input type="radio" name="artistRole" value="and other artists"> And other artists<br>
-									<input type="radio" name="artistRole" value="pupil of"> Pupil of
+									<div class="field">
+										<label class="label">Artist role<br></label>
+										<div class="control">
+											<div class="select">
+											<select name="artistRole">
+												<option value="all">All</option>
+												<?php
+													$roleHelper = 'SELECT DISTINCT ArtistRole FROM Artworfck;';
+													$result = $link->query($roleHelper);
+													if($result->num_rows > 0) {
+														while($row = $result->fetch_assoc()) 
+															echo '<option value="'.$row["ArtistRole"].'">'.$row["ArtistRole"].'</option>';
+													}
+												?>
+											</select>
+											</div>
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -225,30 +243,14 @@
 
 				<b>Options</b><br>
 				<div style="text-align: left;">
-					Order by:
-					<div class="dropdown is-left">
-						<div class="dropdown-trigger">
-							<button id="sortOrder" type="button" class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-								<span>Order</span>
-								<span class="icon is-small">
-									<i class="fas fa-angle-down" aria-hidden="true"></i>
-								</span>
-							</button>
-						</div>
-						<div class="dropdown-menu" id="dropdown-menu3" role="menu">
-							<div class="dropdown-content">
-								<!-- <a href="#" class="dropdown-item">A - Z</a>
-								<a href="#" class="dropdown-item">Z - A</a> -->
-								<div class="dropdown-item">
-									<label class="radio">
-										<input type="radio" name="order" value="asc">A - Z
-									</label>
-								</div>
-								<div class="dropdown-item">
-									<label class="radio">
-										<input type="radio" name="order" value="desc">Z - A
-									</label>
-								</div>
+					<div class="field">
+						<label class="label">Order by<br></label>
+						<div class="control">
+							<div class="select">
+							<select name="order">
+								<option value="asc">A - Z</option>
+								<option value="desc">Z - A</option>
+							</select>
 							</div>
 						</div>
 					</div>
