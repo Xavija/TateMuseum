@@ -31,8 +31,8 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
   - prevenzione SQL injection
   - report(s)
   - ~~visualizzazione risultati~~
-- Visualizzazione in tabella
-  - thumbnail e url
+- ~~Visualizzazione in tabella~~
+  - ~~thumbnail e url~~
 - ~~Integrare valori checkbox in php~~
 - Completare l'integrazione dei menù drop down
 - Headers effettivi nella pagina
@@ -42,8 +42,9 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 
 - Michele
   - ~~tabella con scrollbar~~
-  - fixare tabella scrollbar (bordo esterno con pochi elementi)
-  - preparazione pagina per thumbnail e url
+  - ~~fixare tabella scrollbar (bordo esterno con pochi elementi)~~
+  - ~~preparazione pagina per thumbnail e url~~
+  - Abbellire le pagine in depth
 - Phil
   - report
   - dropdown
