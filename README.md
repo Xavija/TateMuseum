@@ -47,4 +47,4 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
   - Abbellire le pagine in depth
 - Phil
   - report
-  - dropdown
+  - ~~dropdown~~
