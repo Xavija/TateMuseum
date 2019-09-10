@@ -216,7 +216,7 @@
 										<label class="label">Gender</label>
 										<div class="control">
 											<div class="select">
-											<select>
+											<select name="gender">
 												<option value="all">All</option>
 												<option value="male">Male</option>
 												<option value="female">Female</option>
