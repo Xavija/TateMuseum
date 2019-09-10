@@ -94,8 +94,8 @@
 							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							ORDER BY Artwork.Title '.$order.'
-							LIMIT 200;
-						';
+							LIMIT 200
+						;';
 
 						$query_count = 1;
 						$fields = array($fields1);
@@ -105,7 +105,7 @@
 							if($artist_name == '') $artist_name = '%';
 							if($places == '') $places = '%';
 							if($artist_year == '') $artist_year = '%';
-							if($gender == '') $gender = '%';
+							if($gender == 'all') $gender = '%';
 
 							$fields1 = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
@@ -155,7 +155,7 @@
 							if($medium == '') $medium = '%';
 							if($artwork_year == '') $artwork_year = '%';
 
-							if($gender == '') $gender = '%';
+							if($gender == 'all') $gender = '%';
 
 							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
