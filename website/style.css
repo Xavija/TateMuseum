@@ -32,13 +32,13 @@ div.tableContainer {
     /* border: 1px solid #444; */
     overflow: auto;
     width: 100%;
-    height: 90%;
+    height: 85%;
 }
 
 html body div.tableContainer {
     overflow: hidden;
     width: 100%;
-    height: 90%;
+    height: 85%;
 }
 
 thead th,

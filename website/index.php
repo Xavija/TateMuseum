@@ -152,6 +152,7 @@
 		<div class="split left">
 			<form action="index.php" method="get">
 				<br>
+				<h3 class="title is-3" style="text-align: center;">Search</h3>
 				<div class="tabs is-toggle is-centered">
 					<ul>
 						<li class="is-active" id="5">
@@ -260,6 +261,7 @@
 
 		<div class="split right">
 			<br>
+			<h3 class="title is-3" style="text-align: center;">Search Results</h3>
 			<div id="tableContainer" class="tableContainer">
 				<?php
 					for($j = 0; $j < $query_count; $j++) {
