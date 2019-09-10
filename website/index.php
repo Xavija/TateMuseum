@@ -285,83 +285,81 @@
 
 		<div class="split right">
 			<br>
-			<h3 class="title is-3" style="text-align: center;">Search Results</h3>
-			<div id="tableContainer" class="tableContainer">
-				<?php
-					for($j = 0; $j < $query_count; $j++) {
-						$result = $link->query($query);
-						if($result->num_rows >= 15) {
-							echo 'Total: ' .$result->num_rows;
-							echo '<table cellpadding="0" cellspacing="0" width="100%" class="scrollTable"><thead class="fixedHeader"><tr>';
-							for($i = 0; $i<count($fields[$j]); $i++) {
-								echo '<th width="' .(100/count($fields[$j])). '%"><b>' .$fields[$j][$i]. '</b></th>';
-							}
-							echo '</tr></thead><tbody class="scrollContent">';
+			<?php
+				for($j = 0; $j < $query_count; $j++) {
+					$result = $link->query($query);
+					echo '<h3 class="title is-3" style="text-align: center;">Search Results (Total: ' .$result->num_rows. ')</h3>';
+					echo '<div id="tableContainer" class="tableContainer">';
+					if($result->num_rows >= 15) {
+						echo '<table cellpadding="0" cellspacing="0" width="100%" class="scrollTable"><thead class="fixedHeader"><tr>';
+						for($i = 0; $i<count($fields[$j]); $i++) {
+							echo '<th width="' .(100/count($fields[$j])). '%"><b>' .$fields[$j][$i]. '</b></th>';
+						}
+						echo '</tr></thead><tbody class="scrollContent">';
 
-							for($k = 0; $row = $result->fetch_assoc(); $k++) {
-								if($k % 2 != 0) {
-									echo '<tr class="alternateRow">';
+						for($k = 0; $row = $result->fetch_assoc(); $k++) {
+							if($k % 2 != 0) {
+								echo '<tr class="alternateRow">';
+							}
+							else {
+								echo '<tr>';
+							}
+							
+							for($i = 0; $i<count($fields[$j]); $i++) {
+								if($fields[$j][$i] == "Title") {
+									echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 								}
 								else {
-									echo '<tr>';
-								}
-								
-								for($i = 0; $i<count($fields[$j]); $i++) {
-									if($fields[$j][$i] == "Title") {
-										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									if($fields[$j][$i] == "Name") {
+										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
 									}
 									else {
-										if($fields[$j][$i] == "Name") {
-											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
-										}
-										else {
-											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
-										}
+										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
 									}
 								}
-								echo '</tr>';
 							}
-							echo '</tbody></table>';
+							echo '</tr>';
 						}
-						else {
-							if($result->num_rows > 0){
-								echo '<table cellpadding="0" cellspacing="0" width="100%"><thead><tr>';
-							for($i = 0; $i<count($fields[$j]); $i++) {
-								echo '<th width="' .(100/count($fields[$j])). '%" style="text-align: center;"><b>' .$fields[$j][$i]. '</b></th>';
-							}
-							echo '</tr></thead><tbody>';
-
-							for($k = 0; $row = $result->fetch_assoc(); $k++) {
-								if($k % 2 != 0) {
-									echo '<tr class="alternateRow">';
-								}
-								else {
-									echo '<tr>';
-								}
-								
-								for($i = 0; $i<count($fields[$j]); $i++) {
-									if($fields[$j][$i] == "Title") {
-										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
-									}
-									else {
-										if($fields[$j][$i] == "Name") {
-											echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
-										}
-										else {
-											echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
-										}
-									}
-								}
-								echo '</tr>';
-							}
-							echo '</tbody></table>';
-							}
-							else echo 'Internal Error OR Empty Result<br><br>' .$query;
-						}
+						echo '</tbody></table></div>';
 					}
-					$link->close();
-				?>
-			</div>
+					else {
+						if($result->num_rows > 0){
+							echo '<table cellpadding="0" cellspacing="0" width="100%"><thead><tr>';
+						for($i = 0; $i<count($fields[$j]); $i++) {
+							echo '<th width="' .(100/count($fields[$j])). '%" style="text-align: center;"><b>' .$fields[$j][$i]. '</b></th>';
+						}
+						echo '</tr></thead><tbody>';
+
+						for($k = 0; $row = $result->fetch_assoc(); $k++) {
+							if($k % 2 != 0) {
+								echo '<tr class="alternateRow">';
+							}
+							else {
+								echo '<tr>';
+							}
+							
+							for($i = 0; $i<count($fields[$j]); $i++) {
+								if($fields[$j][$i] == "Title") {
+									echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+								}
+								else {
+									if($fields[$j][$i] == "Name") {
+										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									}
+									else {
+										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+									}
+								}
+							}
+							echo '</tr>';
+						}
+						echo '</tbody></table></div>';
+						}
+						else echo 'Internal Error OR Empty Result<br><br>' .$query;
+					}
+				}
+				$link->close();
+			?>
 		</div>
 	</body>
 </html>
