@@ -21,10 +21,18 @@
 
 			$link = new mysqli($server, $user, $pass, $db);
 			if($link->connect_error) {
-				echo 'Errore di connessione al database.' . '<br>';
-				echo 'Codice di errore: ' . $link->connect_error . '<br>';
-				exit;
+				$user	= "phil";
+				$pass 	= "";
+				$link = new mysqli($server, $user, $pass, $db);
+
+				if($link->connect_error) {
+					echo 'Errore di connessione al database.' . '<br>';
+					echo 'Codice di errore: ' . $link->connect_error . '<br>';
+					exit;
+				}
 			}
+
+			$id = $_GET["artistID"];
 
 			$general 		= $_GET["general"];
 
@@ -44,116 +52,130 @@
 			// options:
 			$order			= $_GET["order"];
 			
-			if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
-				// query #1: artwork
-				$query ='
-					SELECT Title, Name, Medium, ArtistRole, Year, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
-					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-					WHERE Title LIKE "'.$general.'%"
-					ORDER BY Title '.$order.';
-				';	
-				$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'Year',);
-				
-				// query #2: artista
-				$query ='
-					SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
-					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-					WHERE Title LIKE "'.$general.'%"
+			if($id) {
+				$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name');
+				$query = '
+					SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+					FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+					WHERE Artist.ID = ' .$id. '
 					ORDER BY Title '.$order.'
 				;';
-				$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 				
-				$fields = array($fields1, $fields2);
-				$query_count = 2; 
+				$query_count = 1;
+				$fields = array($fields);
 			}
 			else {
-				if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
-					$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
+				if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
+					// query #1: artwork
 					$query ='
-						SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
-						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
-						ORDER BY Artwork.Title '.$order.'
-						LIMIT 200;
-					';
-
-					$query_count = 1;
-					$fields = array($fields);
+						SELECT Title, Name, Medium, ArtistRole, Year, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+						WHERE Title LIKE "'.$general.'%"
+						ORDER BY Title '.$order.';
+					';	
+					$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'Year',);
+					
+					// query #2: artista
+					$query ='
+						SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
+						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+						WHERE Title LIKE "'.$general.'%"
+						ORDER BY Title '.$order.'
+					;';
+					$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+					
+					$fields = array($fields1, $fields2);
+					$query_count = 2; 
 				}
 				else {
-					if($infos[0]) {	// ricerca gudata, artista
-						if($artist_name == '') $artist_name = '%';
-						if($places == '') $places = '%';
-						if($artist_year == '') $artist_year = '%';
-						if($gender == 'all') $gender = '%';
-
-						$fields = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
-						$query = '
-							SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artist.ID IDA
-							FROM Artist
-							WHERE Name LIKE "%'.$artist_name.'%"
-							AND Gender LIKE "'.$gender.'"
-							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
-							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
-							ORDER BY Name '.$order.'
-						;';
-						
-						$query_count = 1;
-						$fields = array($fields);
-
-					}
-					if($infos[1]) {  // ricerca guidata, artwork
-						if($title == '') $title = '%';
-						if($inscription == '') $inscription = '%';
-						if($medium == '') $medium = '%';
-						if($artwork_year == '') $artwork_year = '%';
-						if($artist_role == 'all') $artist_role = '%';
-
-						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
-						$query = '
-							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+					if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
+						$fields = array('Title', 'Year', 'Medium', 'Name', 'Gender');
+						$query ='
+							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
-							WHERE Title LIKE "%'.$title.'%"
-							AND Year LIKE "%'.$artwork_year.'%"
-							AND Medium LIKE "%'.$medium.'%"
-							AND Inscription LIKE "%'.$inscription.'%"
-							AND ArtistRole LIKE "%'.$artist_role.'%"
-							ORDER BY Title '.$order.'
-						;';
-						
+							ORDER BY Artwork.Title '.$order.'
+							LIMIT 200;
+						';
+
 						$query_count = 1;
 						$fields = array($fields);
-
 					}
-					if($infos[0] and $infos[1]) {  // ricerca guidata, artista + artwork
-						if($artist_name == '') $artist_name = '%';
-						if($places == '') $places = '%';
-						if($artist_year == '') $artist_year = '%';
+					else {
+						if($infos[0]) {	// ricerca gudata, artista
+							if($artist_name == '') $artist_name = '%';
+							if($places == '') $places = '%';
+							if($artist_year == '') $artist_year = '%';
+							if($gender == 'all') $gender = '%';
 
-						if($title == '') $title = '%';
-						if($inscription == '') $inscription = '%';
-						if($medium == '') $medium = '%';
-						if($artwork_year == '') $artwork_year = '%';
+							$fields = array('Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$query = '
+								SELECT DISTINCT Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artist.ID IDA
+								FROM Artist
+								WHERE Name LIKE "%'.$artist_name.'%"
+								AND Gender LIKE "'.$gender.'"
+								AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
+								AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
+								ORDER BY Name '.$order.'
+							;';
+							
+							$query_count = 1;
+							$fields = array($fields);
 
-						if($gender == 'all') $gender = '%';
+						}
+						if($infos[1]) {  // ricerca guidata, artwork
+							if($title == '') $title = '%';
+							if($inscription == '') $inscription = '%';
+							if($medium == '') $medium = '%';
+							if($artwork_year == '') $artwork_year = '%';
+							if($artist_role == 'all') $artist_role = '%';
 
-						$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
-						$query = '
-							SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
-							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
-							WHERE Name LIKE "%'.$artist_name.'%"
-							AND Gender LIKE "'.$gender.'"
-							AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
-							AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
-							AND Title LIKE "%'.$title.'%"
-							AND Year LIKE "%'.$artwork_year.'%"
-							AND Medium LIKE "%'.$medium.'%"
-							AND Inscription LIKE "%'.$inscription.'%"
-							AND ArtistRole LIKE "%'.$artist_role.'%"
-							ORDER BY Title '.$order.'
-						;';
-						
-						$query_count = 1;
-						$fields = array($fields);
+							$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
+							$query = '
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+								WHERE Title LIKE "%'.$title.'%"
+								AND Year LIKE "%'.$artwork_year.'%"
+								AND Medium LIKE "%'.$medium.'%"
+								AND Inscription LIKE "%'.$inscription.'%"
+								AND ArtistRole LIKE "%'.$artist_role.'%"
+								ORDER BY Title '.$order.'
+							;';
+							
+							$query_count = 1;
+							$fields = array($fields);
+
+						}
+						if($infos[0] and $infos[1]) {  // ricerca guidata, artista + artwork
+							if($artist_name == '') $artist_name = '%';
+							if($places == '') $places = '%';
+							if($artist_year == '') $artist_year = '%';
+
+							if($title == '') $title = '%';
+							if($inscription == '') $inscription = '%';
+							if($medium == '') $medium = '%';
+							if($artwork_year == '') $artwork_year = '%';
+
+							if($gender == 'all') $gender = '%';
+
+							$fields = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$query = '
+								SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+								WHERE Name LIKE "%'.$artist_name.'%"
+								AND Gender LIKE "'.$gender.'"
+								AND (PlaceOfBirth LIKE "%'.$places.'%" OR PlaceOfDeath LIKE "%'.$places.'%")
+								AND (YearOfBirth LIKE "'.$artist_year.'" OR YearOfDeath LIKE "'.$artist_year.'")
+								AND Title LIKE "%'.$title.'%"
+								AND Year LIKE "%'.$artwork_year.'%"
+								AND Medium LIKE "%'.$medium.'%"
+								AND Inscription LIKE "%'.$inscription.'%"
+								AND ArtistRole LIKE "%'.$artist_role.'%"
+								ORDER BY Title '.$order.'
+							;';
+							
+							$query_count = 1;
+							$fields = array($fields);
+						}
 					}
 				}
 			}

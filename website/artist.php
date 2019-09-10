@@ -39,8 +39,9 @@
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Artist.ID = '.$id.'
 					ORDER BY Year ASC
+					LIMIT 5
 				;';
-				$fields2 = array('Title', 'ArtistRole', 'Medium', 'Year');
+				$fields2 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole');
 								// Numero di opere per artista
 				$query3 = '
 					SELECT COUNT(Artwork.ID) AS Num
@@ -102,22 +103,48 @@
 					}
 				}
 
-				echo '<br>Vedi <a href="index.php?artistInfo=true
-				&name=' .str_replace(", ", "%2C+", $result["Name"]). '
-				&places=' .str_replace(", ", "%2C+", $result["PlaceOfBirth"]). '
-				&artistYear=' .$result["YearOfBirth"]. '
-				&gender=' .$result["Gender"]. '
-				&artworkInfo=true&title=&inscription=&medium=&artworkYear=&artistRole=%25&general=
-				">tutte le opere</a>';
-				echo '<br>Torna alla <a href="index.php">home</a>';
+				echo '<br><a href="index.php">Home</a>';
 				if($result["url"])
-					echo '<br>Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
+					echo ' | <a href="' .$result["url"]. '">TATE page</a>';
 			}
 
 			$result = $link->query($query3);
 			if($result->num_rows > 0) {
 				$result = $result->fetch_assoc();
-				echo '<p>Questo artista ha realizzato '.$result[$fields3[0]].' opere.<br></p>';
+				echo '<br>Questo artista ha realizzato '.$result[$fields3[0]].' opere. ';
+				echo '(<a href="index.php?artistID=' .$id. '">Lista completa</a>)';
+			}
+			else {
+				echo '<br>Vedi <a href="index.php?artistID=' .$id. '">tutte le opere</a>';
+			}
+
+			$result = $link->query($query2);
+			if($result->num_rows > 0) {
+				echo '<table cellpadding="0" cellspacing="0" width="75%" class="scrollTable"><thead class="fixedHeader"><tr>';
+				for($i = 0; $i<count($fields2); $i++) {
+					echo '<th width="' .(100/count($fields2)). '%"><b>' .$fields2[$i]. '</b></th>';
+				}
+				echo '</tr></thead><tbody class="scrollContent">';
+
+				for($k = 0; $row = $result->fetch_assoc(); $k++) {
+					if($k % 2 != 0) {
+						echo '<tr class="alternateRow">';
+					}
+					else {
+						echo '<tr>';
+					}
+					
+					for($i = 0; $i<count($fields2); $i++) {
+						if($fields2[$i] == "Title") {
+							echo '<td width="' .(100/count($fields2)). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields2[$i]]. '</a></td>';
+						}
+						else {
+							echo '<td width="' .(100/count($fields2)). '%">' .$row[$fields2[$i]]. '</td>';
+						}
+					}
+					echo '</tr>';
+				}
+				echo '</tbody></table>';
 			}
 			$link->close();
 		?>
