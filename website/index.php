@@ -241,7 +241,7 @@
 											<select name="artistRole">
 												<option value="all">All</option>
 												<?php
-													$roleHelper = 'SELECT DISTINCT ArtistRole FROM Artworfck;';
+													$roleHelper = 'SELECT DISTINCT ArtistRole FROM Artwork;';
 													$result = $link->query($roleHelper);
 													if($result->num_rows > 0) {
 														while($row = $result->fetch_assoc()) 
