@@ -14,8 +14,8 @@
 	<body>
 		<?php
 			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
+			$user	= "phil";
+			$pass 	= "";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);

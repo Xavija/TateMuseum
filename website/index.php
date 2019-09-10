@@ -15,8 +15,8 @@
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<?php
 			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
+			$user	= "phil";
+			$pass 	= "";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -216,11 +216,11 @@
 										<label class="label">Gender</label>
 										<div class="control">
 											<div class="select">
-											<select name="gender">
-												<option value="all">All</option>
-												<option value="male">Male</option>
-												<option value="female">Female</option>
-											</select>
+												<select name="gender">
+													<option value="all">All</option>
+													<option value="male">Male</option>
+													<option value="female">Female</option>
+												</select>
 											</div>
 										</div>
 									</div>

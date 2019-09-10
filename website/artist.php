@@ -14,8 +14,8 @@
 	<body>
 		<?php
 			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
+			$user	= "phil";
+			$pass 	= "";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -48,9 +48,19 @@
 					FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 					WHERE Artist.ID = '.$id.'
 				;';
-				$fields3 = array("Num");
+				$fields3 = array('Num');
 				
-				$fields = array($fields1, $fields2, $fields3);
+				$query4 = '
+				SELECT COUNT(Artwork.ID) Num, Year
+				FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+				WHERE Artwork.ArtistId = '.$id.'
+				GROUP BY Year
+				ORDER BY Num DESC
+				LIMIT 1;
+				';
+				$fields4 = array('Num', 'Year');
+
+				$fields = array($fields1, $fields2, $fields3, $fields4);
 			}
 			else {
 				echo 'Errore durante la ricezione dei dati.';
@@ -116,6 +126,15 @@
 			}
 			else {
 				echo '<br>Vedi <a href="index.php?artistID=' .$id. '">tutte le opere</a>';
+			}
+			
+			$result = $link->query($query4);
+			if($result->num_rows > 0) {
+				$result = $result->fetch_assoc();
+				if($result["Year"] == '')
+					echo '<br>L\'anno con più opere è sconosciuto ('.$result["Num"].' opere).<br>';
+				else 
+					echo '<br>L\'anno con più opere è il '.$result["Year"].' ('.$result[$fields4[0]].' opere).<br>';
 			}
 
 			$result = $link->query($query2);
