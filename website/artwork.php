@@ -51,21 +51,25 @@
 			if($result->num_rows > 0){
 				$result = $result->fetch_assoc();
 				
-				if($result["Title"])
-					echo '<b style="font-size: larger">' .$result["Title"]. '</b><br>';
 				if($result["ThumbnailUrl"])
-					echo '<img src="' .$result["ThumbnailUrl"]. '" style="float: left; border: solid 2px darkgrey; margin-right: 2px;">';
+				echo '<img src="' .$result["ThumbnailUrl"]. '" width="500px" style="float: left; border: solid 2px darkgrey; margin-right: 10px;">';
 
+				if($result["Title"])
+					echo '<h3 class="title is-3"><b style="font-size: larger">' .$result["Title"]. '</b></h3><br>';
+				
+				echo '<h4 class="title is-4" style="margin-top: -2%;">';
 				if($result["Artist"])
 					echo 'Artist: <a href=artist.php?id="' .$result["ArtistId"]. '">' .str_replace(", ", " ", $result["Artist"]). '</a>';
 				if($result["ArtistRole"])
 					echo ' (Artist role: ' .$result["ArtistRole"]. ')<br>';
 				else
 					echo '<br>';
+
+				echo '</h4><div style="clear: left"><h5 class="title is-5">';
+
 				if($result["Medium"])
 					echo 'Medium: ' .$result["Medium"] .'<br>';
 				
-				echo '<div style="clear: left">';
 				if($result["Year"])
 					echo 'Year of creation: ' .$result["Year"] .'<br>';
 				if($result["AcquisitionYear"])
@@ -79,10 +83,11 @@
 				}
 				if($result["Inscription"])
 					echo 'Inscription: "' .$result["Inscription"]. '"<br>';
+				echo '</h5><br>';
 
-				echo '<br>Torna alla <a href="index.php">home</a>';
+				echo '<a href="index.php">Home</a>';
 				if($result["url"])
-					echo 'Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
+					echo ' | <a href="' .$result["url"]. '">TATE page</a>';
 				echo '</div>';
 			}
 			else echo 'Internal Error OR Empty Result<br><br>';
