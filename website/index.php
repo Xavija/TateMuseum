@@ -66,36 +66,36 @@
 			}
 			else {
 				if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
-					// query #1: artwork
-					$query ='
-						SELECT Title, Name, Medium, ArtistRole, Year, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
-						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-						WHERE Title LIKE "'.$general.'%"
-						ORDER BY Title '.$order.';
-					';	
-					$fields1 = array('Title', 'Name', 'Medium', 'ArtistRole', 'Year',);
-					
-					// query #2: artista
+				
+					// query: artista
 					$query ='
 						SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-						WHERE Title LIKE "'.$general.'%"
+						WHERE Title LIKE "%'.$general.'%"
 						ORDER BY Title '.$order.'
+						LIMIT 200
 					;';
-					$fields2 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+					$fields = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 					
-					$fields = array($fields1, $fields2);
-					$query_count = 2; 
+					$fields = array($fields1);
+					$query_count = 1; 
 				}
 				else {
 					if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
-						$fields1 = array('Title', 'Year', 'Medium', 'Name', 'Gender');
-						$query ='
+						$fields = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+						/* $query ='
 							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 							ORDER BY Artwork.Title '.$order.'
 							LIMIT 200
-						;';
+						;'; */
+						$query ='
+							SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
+							FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
+							ORDER BY Name '.$order.'
+							LIMIT 200
+							;	
+						';
 
 						$query_count = 1;
 						$fields = array($fields1);
