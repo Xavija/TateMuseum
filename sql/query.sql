@@ -1,19 +1,25 @@
+-- numero totale di opere
+-- anno con maggiori opere
+-- (controllando che non ci sia sempre lo stesso numero di opere)
+-- medium maggiormente utilizzati
+-- (controlli)
+-- artist role maggiormente popolare
+
 USE TATE;
+CLEAR;
 
--- Ricerca di un artista
--- per nome e sesso
-SELECT DISTINCT Name, Dates
-FROM Artist
-WHERE Name LIKE "BLAKE, %"
-AND Gender LIKE "Male" 
-;
+-- Totale opere per ogni artista (Non necessaria)
+-- SELECT COUNT(Artist.ID) Num
+-- FROM Artist
+-- 	JOIN Artwork ON Artist.ID = Artwork.ArtistId
+-- GROUP BY Artist.ID
+-- ;
 
--- SELECT DISTINCT A.Name, A.Dates
--- FROM Artist A JOIN Artwork B ON A.ID = B.ArtistId
--- WHERE B.Title = "";
-
--- Tutte le opere di ogni artista
-SELECT A.Name, B.Title, B.Year
-FROM Artist A JOIN Artwork B on A.ID=B.ArtistId
-GROUP BY A.Name 
+-- Dato un artista anno con il numero maggiore di opere (in questo caso viene detto per tutti gli artisti perché sono SWAG)
+SELECT MAX(N)
+FROM
+	(SELECT Artwork.Year, COUNT(Artwork.ID) N
+	FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+	WHERE Artist.ID = 622
+	GROUP BY Artwork.Year) a
 ;
