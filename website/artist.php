@@ -26,7 +26,7 @@
 			}
 			$id = $_GET["id"];
 
-			if($id) {			// Artist.IDs
+			if(isset($id)) {			// Artist.IDs
 				$query1 ='			
 					SELECT *
 					FROM Artist

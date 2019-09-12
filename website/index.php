@@ -15,8 +15,8 @@
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<?php
 			$server = "localhost";
-			$user	= "phil";
-			$pass 	= "";
+			$user	= "michele";
+			$pass 	= "Aero";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
@@ -52,7 +52,7 @@
 			// options:
 			$order			= $_GET["order"];
 			
-			if($id) {
+			if($id != null) {
 				$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name');
 				$query = '
 					SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
@@ -216,11 +216,11 @@
 										<label class="label">Gender</label>
 										<div class="control">
 											<div class="select">
-												<select name="gender">
-													<option value="all">All</option>
-													<option value="male">Male</option>
-													<option value="female">Female</option>
-												</select>
+											<select name="gender">
+												<option value="all">All</option>
+												<option value="male">Male</option>
+												<option value="female">Female</option>
+											</select>
 											</div>
 										</div>
 									</div>
