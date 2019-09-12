@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 	<meta charset="utf-8">
@@ -14,16 +15,23 @@
 	<body>
 		<?php
 			$server = "localhost";
-			$user	= "phil";
-			$pass 	= "";
+			$user	= "michele";
+			$pass 	= "Aero";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
 			if($link->connect_error) {
-				echo 'Errore di connessione al database.' . '<br>';
-				echo 'Codice di errore: ' . $link->connect_error . '<br>';
-				exit;
+				$user	= "phil";
+				$pass 	= "";
+				$link = new mysqli($server, $user, $pass, $db);
+
+				if($link->connect_error) {
+					echo 'Errore di connessione al database.' . '<br>';
+					echo 'Codice di errore: ' . $link->connect_error . '<br>';
+					exit;
+				}
 			}
+			
 			$id = $_GET["id"];
 
 			if(isset($id)) {			// Artist.IDs
@@ -70,13 +78,15 @@
 			if($result->num_rows > 0) {
 				$result = $result->fetch_assoc();
 
+				echo '<h3 class="title is-3">';
 				if($result["Name"])
 					echo '<a href="' .$result["url"]. '">
 						<b style="font-size: larger">' .str_replace(", ", " ", $result["Name"]). '</b></a>';
 				if($result["Gender"])
 					echo ' (' .$result["Gender"]. ')';
-				echo '<br>';
+				echo '</h3><br>';
 
+				echo '<h4 class="title is-4" style="margin-top: -2%;">';
 				if(!$result["YearOfBirth"] and !$result["PlaceOfBirth"]) {
 					echo 'Birth: no information<br>';
 				}
@@ -112,10 +122,12 @@
 						echo ' (missing place)<br>';
 					}
 				}
+				echo '</h4>';
 
-				echo '<br><a href="index.php">Home</a>';
+				echo '<div style="margin-top: -1%;"><a href="index.php">Home</a>';
 				if($result["url"])
 					echo ' | <a href="' .$result["url"]. '">TATE page</a>';
+				echo '</div><br>';
 			}
 
 			$result = $link->query($query3);
@@ -137,34 +149,6 @@
 					echo '<br>L\'anno con più opere è il '.$result["Year"].' ('.$result[$fields4[0]].' opere).<br>';
 			}
 
-			$result = $link->query($query2);
-			if($result->num_rows > 0) {
-				echo '<table cellpadding="0" cellspacing="0" width="75%" class="scrollTable"><thead class="fixedHeader"><tr>';
-				for($i = 0; $i<count($fields2); $i++) {
-					echo '<th width="' .(100/count($fields2)). '%"><b>' .$fields2[$i]. '</b></th>';
-				}
-				echo '</tr></thead><tbody class="scrollContent">';
-
-				for($k = 0; $row = $result->fetch_assoc(); $k++) {
-					if($k % 2 != 0) {
-						echo '<tr class="alternateRow">';
-					}
-					else {
-						echo '<tr>';
-					}
-					
-					for($i = 0; $i<count($fields2); $i++) {
-						if($fields2[$i] == "Title") {
-							echo '<td width="' .(100/count($fields2)). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields2[$i]]. '</a></td>';
-						}
-						else {
-							echo '<td width="' .(100/count($fields2)). '%">' .$row[$fields2[$i]]. '</td>';
-						}
-					}
-					echo '</tr>';
-				}
-				echo '</tbody></table>';
-			}
 			$link->close();
 		?>
 	</body>

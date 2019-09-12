@@ -1,5 +1,7 @@
 body {
     background: linear-gradient( 22.5deg, rgba(2, 2, 2, 0.02) 0%, rgba(2, 2, 2, 0.02) 9%, rgba(252, 252, 252, 0.02) 9%, rgba(252, 252, 252, 0.02) 36%, rgba(237, 237, 237, 0.02) 36%, rgba(237, 237, 237, 0.02) 69%, rgba(78, 78, 78, 0.02) 69%, rgba(78, 78, 78, 0.02) 77%, rgba(85, 85, 85, 0.02) 77%, rgba(85, 85, 85, 0.02) 95%, rgba(43, 43, 43, 0.02) 95%, rgba(43, 43, 43, 0.02) 100%), linear-gradient( 90deg, rgba(63, 63, 63, 0.02) 0%, rgba(63, 63, 63, 0.02) 8%, rgba(151, 151, 151, 0.02) 8%, rgba(151, 151, 151, 0.02) 53%, rgba(17, 17, 17, 0.02) 53%, rgba(17, 17, 17, 0.02) 56%, rgba(215, 215, 215, 0.02) 56%, rgba(215, 215, 215, 0.02) 65%, rgba(202, 202, 202, 0.02) 65%, rgba(202, 202, 202, 0.02) 79%, rgba(208, 208, 208, 0.02) 79%, rgba(208, 208, 208, 0.02) 100%), linear-gradient( 67.5deg, rgba(129, 129, 129, 0.02) 0%, rgba(129, 129, 129, 0.02) 13%, rgba(71, 71, 71, 0.02) 13%, rgba(71, 71, 71, 0.02) 16%, rgba(51, 51, 51, 0.02) 16%, rgba(51, 51, 51, 0.02) 18%, rgba(86, 86, 86, 0.02) 18%, rgba(86, 86, 86, 0.02) 90%, rgba(227, 227, 227, 0.02) 90%, rgba(227, 227, 227, 0.02) 91%, rgba(30, 30, 30, 0.02) 91%, rgba(30, 30, 30, 0.02) 100%), linear-gradient(90deg, #fff, #fff);
+    height: 100%;
+    width: 100%;
     padding-left: 5px;
 }
 
@@ -11,6 +13,7 @@ body {
     padding-right: 5%;
     position: fixed;
     overflow-x: hidden;
+    border-right: 5px solid #BBB;
     /* background: rgb(163, 234, 72); */
     background: linear-gradient( 22.5deg, rgba(2, 2, 2, 0.02) 0%, rgba(2, 2, 2, 0.02) 9%, rgba(252, 252, 252, 0.02) 9%, rgba(252, 252, 252, 0.02) 36%, rgba(237, 237, 237, 0.02) 36%, rgba(237, 237, 237, 0.02) 69%, rgba(78, 78, 78, 0.02) 69%, rgba(78, 78, 78, 0.02) 77%, rgba(85, 85, 85, 0.02) 77%, rgba(85, 85, 85, 0.02) 95%, rgba(43, 43, 43, 0.02) 95%, rgba(43, 43, 43, 0.02) 100%), linear-gradient( 90deg, rgba(63, 63, 63, 0.02) 0%, rgba(63, 63, 63, 0.02) 8%, rgba(151, 151, 151, 0.02) 8%, rgba(151, 151, 151, 0.02) 53%, rgba(17, 17, 17, 0.02) 53%, rgba(17, 17, 17, 0.02) 56%, rgba(215, 215, 215, 0.02) 56%, rgba(215, 215, 215, 0.02) 65%, rgba(202, 202, 202, 0.02) 65%, rgba(202, 202, 202, 0.02) 79%, rgba(208, 208, 208, 0.02) 79%, rgba(208, 208, 208, 0.02) 100%), linear-gradient( 67.5deg, rgba(129, 129, 129, 0.02) 0%, rgba(129, 129, 129, 0.02) 13%, rgba(71, 71, 71, 0.02) 13%, rgba(71, 71, 71, 0.02) 16%, rgba(51, 51, 51, 0.02) 16%, rgba(51, 51, 51, 0.02) 18%, rgba(86, 86, 86, 0.02) 18%, rgba(86, 86, 86, 0.02) 90%, rgba(227, 227, 227, 0.02) 90%, rgba(227, 227, 227, 0.02) 91%, rgba(30, 30, 30, 0.02) 91%, rgba(30, 30, 30, 0.02) 100%), linear-gradient(90deg, #fff, #fff);
     text-align: center;
@@ -30,7 +33,6 @@ body {
 
 div.tableContainer {
     clear: both;
-    /* border: 1px solid #444; */
     overflow: auto;
     width: 100%;
     height: 85%;
@@ -46,8 +48,6 @@ thead th,
 thead.fixedHeader th {
     background: #444;
     color: #DDD;
-    /* border-left: 1px solid #666; */
-    /* border-right: 1px solid #555; */
     border-top: 1px solid #666;
     font-weight: normal;
     padding: 4px 3px;

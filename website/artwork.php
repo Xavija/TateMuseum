@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 	<head>
 	<meta charset="utf-8">
@@ -14,16 +15,23 @@
 	<body>
 		<?php
 			$server = "localhost";
-			$user	= "phil";
-			$pass 	= "";
+			$user	= "michele";
+			$pass 	= "Aero";
 			$db 	= "TATE";
 
 			$link = new mysqli($server, $user, $pass, $db);
 			if($link->connect_error) {
-				echo 'Errore di connessione al database.' . '<br>';
-				echo 'Codice di errore: ' . $link->connect_error . '<br>';
-				exit;
+				$user	= "phil";
+				$pass 	= "";
+				$link = new mysqli($server, $user, $pass, $db);
+
+				if($link->connect_error) {
+					echo 'Errore di connessione al database.' . '<br>';
+					echo 'Codice di errore: ' . $link->connect_error . '<br>';
+					exit;
+				}
 			}
+			
 			$id = $_GET["id"];
 
 			if($id) {

@@ -206,8 +206,8 @@
 					<div id="guided" style="display: block;">
 						<b>Filters</b><br>
 						<div style="text-align: left;">
-							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true" checked> Artist
-							<div id="ArtistDiv" style="margin-bottom: -5%;">
+							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true"> Artist
+							<div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
 								<div class="control">
 									<input class="input is-rounded is-focused" type="text" name="name" placeholder="Name" style="margin-top:4px; margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="text" name="places" placeholder="Places" style="margin-bottom: 7px;">
