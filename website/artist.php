@@ -164,5 +164,14 @@
 				?>
 				</div>
 		</section>
+		
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>
+				<a href="index.php">Home</a> | <a href="https://www.tate.org.uk/">TATE</a><br>
+				Made with <a href="https://www.bulma.io"><b>Bulma</b></a>
+				</p>
+			</div>
+		</footer>
 	</body>
 </html>
