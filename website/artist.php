@@ -45,8 +45,8 @@
 						$link = new mysqli($server, $user, $pass, $db);
 
 						if($link->connect_error) {
-							echo 'Errore di connessione al database.' . '<br>';
-							echo 'Codice di errore: ' . $link->connect_error . '<br>';
+							echo 'Unable to connect to ' .$db. ' DB<br>';
+							echo 'Error code: ' . $link->connect_error . '<br>';
 							exit;
 						}
 					}

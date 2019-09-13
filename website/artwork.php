@@ -45,8 +45,8 @@
 					$link = new mysqli($server, $user, $pass, $db);
 
 					if($link->connect_error) {
-						echo 'Errore di connessione al database.' . '<br>';
-						echo 'Codice di errore: ' . $link->connect_error . '<br>';
+						echo 'Unable to connect to ' .$db. ' DB<br>';
+						echo 'Error code: ' . $link->connect_error . '<br>';
 						exit;
 					}
 				}
@@ -96,7 +96,6 @@
 					if($result["Medium"])
 						echo 'Medium: ' .$result["Medium"] .'<br>';
 					
-					echo '<div style="clear: left">';
 					if($result["Year"])
 						echo 'Year of creation: ' .$result["Year"] .'<br>';
 					if($result["AcquisitionYear"])
@@ -112,8 +111,7 @@
 						echo 'Inscription: "' .$result["Inscription"]. '"<br>';
 
 					if($result["url"])
-						echo 'Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
-					echo '</div>';
+						echo 'Link for the <a href="' .$result["url"]. '">official page</a> of this artwork';
 				}
 				else echo 'Internal Error OR Empty Result<br><br>';
 
