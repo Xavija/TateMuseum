@@ -43,8 +43,8 @@
 				$link = new mysqli($server, $user, $pass, $db);
 
 				if($link->connect_error) {
-					echo 'Errore di connessione al database.' . '<br>';
-					echo 'Codice di errore: ' . $link->connect_error . '<br>';
+					echo 'Unable to connect to ' .$db. ' DB<br>';
+					echo 'Error code: ' . $link->connect_error . '<br>';
 					exit;
 				}
 			}
@@ -83,18 +83,56 @@
 			}
 			else {
 				if($general != '' and !$infos[0] and !$infos[1]) { // ricerca libera
-				
-					// query: artista
-					$query ='
-						SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
-						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
-						WHERE Title LIKE "%'.$general.'%"
-						ORDER BY Title '.$order.'
-						LIMIT 200
-					;';
-					$fields1 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
-					
+					$fieldsArtist = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+					$bestArtist = null;
+					for($i = 0; $i < count($fieldsArtist); $i++) {
+						$option = '
+							SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
+							FROM Artist
+							WHERE ' .$fieldsArtist[$i]. ' LIKE "%'.$general.'%"
+							ORDER BY ' .$fieldsArtist[$i]. ' '.$order.'
+							LIMIT 200
+						;';
+						$result = $link->query($option);
+						if($bestArtist == null or ($bestArtist > $result->num_rows and $result->num_rows > 0)) {
+							$queryArtist = $option;
+							$bestArtist = $result->num_rows;
+						}
+					}
 
+					$fieldsArtwork = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole');
+					$bestArtwork = null;
+					for($i = 0; $i < count($fieldsArtwork); $i++) {
+						$option = '
+							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist
+							FROM Artwork JOIN Artist ON Artwork.ArtistId=Artist.ID
+							WHERE ' .$fieldsArtwork[$i]. ' LIKE "%'.$general.'%"
+							ORDER BY ' .$fieldsArtwork[$i]. ' ' .$order. '
+							LIMIT 200
+						;';
+						$result = $link->query($option);
+						if($bestArtwork == null or ($bestArtwork > $result->num_rows and $result->num_rows > 0)) {
+							$queryArtwork = $option;
+							$bestArtwork = $result->num_rows;
+						}
+					}
+
+					if($bestArtwork == 0) {
+						$bestArtwork = $bestArtist + 1;
+					}
+					elseif($bestArtist == 0) {
+						$bestArtist = $bestArtwork + 1;
+					}
+
+					if($bestArtwork < $bestArtist) {
+						array_push($fieldsArtwork, "Artist");
+						$query = $queryArtwork;
+						$fields1 = $fieldsArtwork;
+					}
+					else {
+						$query = $queryArtist;
+						$fields1 = $fieldsArtist;
+					}
 
 					$fields = array($fields1);
 					$query_count = 1; 
@@ -102,12 +140,6 @@
 				else {
 					if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
 						$fields1 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
-						/* $query ='
-							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
-							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
-							ORDER BY Artwork.Title '.$order.'
-							LIMIT 200
-						;'; */
 						$query ='
 							SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
@@ -148,9 +180,9 @@
 							if($artwork_year == '') $artwork_year = '%';
 							if($artist_role == 'all') $artist_role = '%';
 
-							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist.Name');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist');
 							$query = '
-								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 								WHERE Title LIKE "%'.$title.'%"
 								AND Year LIKE "%'.$artwork_year.'%"
@@ -177,9 +209,9 @@
 
 							if($gender == 'all') $gender = '%';
 
-							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
-								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 								WHERE Name LIKE "%'.$artist_name.'%"
 								AND Gender LIKE "'.$gender.'"
@@ -352,31 +384,31 @@
 						echo '</tr></thead><tbody>';
 
 						for($k = 0; $row = $result->fetch_assoc(); $k++) {
-							if($k % 2 != 0) {
-								echo '<tr class="alternateRow">';
-							}
-							else {
-								echo '<tr>';
-							}
-							
+							echo '<tr>';
 							for($i = 0; $i<count($fields[$j]); $i++) {
+								$class = "";
+								if($k%2 != 0) {
+									$class = "aternate";
+								}
+								echo '<td class="' .$class. '" width="' .(100/count($fields[$j])). '%">';
 								if($fields[$j][$i] == "Title") {
-									echo '<td width="' .(100/count($fields[$j])). '%"><a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+									echo '<a href="artwork.php?id=' .$row["ID"]. '">' .$row[$fields[$j][$i]]. '</a>';
 								}
 								else {
 									if($fields[$j][$i] == "Name") {
-										echo '<td width="' .(100/count($fields[$j])). '%"><a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a></td>';
+										echo '<a href="artist.php?id=' .$row["IDA"]. '">' .$row[$fields[$j][$i]]. '</a>';
 									}
 									else {
-										echo '<td width="' .(100/count($fields[$j])). '%">' .$row[$fields[$j][$i]]. '</td>';
+										echo $row[$fields[$j][$i]];
 									}
 								}
+								echo '</td>';
 							}
 							echo '</tr>';
 						}
 						echo '</tbody></table></div>';
 						}
-						else echo 'Internal Error OR Empty Result<br><br>' .$query;
+						else echo 'Internal Error OR Empty Result<br><br>' .$query;	// potremmo aggiungere una query di debug bella e carina da mostrare...
 					}
 				}
 				$link->close();

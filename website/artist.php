@@ -147,12 +147,7 @@
 								echo ' (missing place)<br>';
 							}
 						}
-						echo '</center></h5>';
-
-						echo '<div style="margin-top: -1%;"><a href="index.php">Home</a>';
-						if($result["url"])
-							echo ' | <a href="' .$result["url"]. '">TATE page</a>';
-						echo '</div><br>';
+						echo '</center></h5><br>';
 					}
 				?>
 				</div>
@@ -161,21 +156,18 @@
 					$result = $link->query($query3);
 					if($result->num_rows > 0) {
 						$result = $result->fetch_assoc();
-						echo '<br>Questo artista ha realizzato '.$result[$fields3[0]].' opere. ';
-						echo '(<a href="index.php?artistID=' .$id. '">Lista completa</a>)';
-					}
-					else {
-						echo '<br>Vedi <a href="index.php?artistID=' .$id. '">tutte le opere</a>';
+						echo '<br>This artist has realized '.$result[$fields3[0]].' artworks. ';
+						echo '(<a href="index.php?artistID=' .$id. '">Complete list</a>)';
 					}
 					
-					$result = $link->query($query4);
-					if($result->num_rows > 0) {
-						$result = $result->fetch_assoc();
-						if($result["Year"] == '')
-							echo '<br>L\'anno con più opere è sconosciuto ('.$result["Num"].' opere).<br>';
-						else if($result->num_rows > 1 or $result["Num"] != 1)
-							echo '<br>L\'anno con più opere è il '.$result["Year"].' ('.$result[$fields4[0]].' opere).<br>';
-					}
+					// $result = $link->query($query4);
+					// if($result->num_rows > 0) {
+					// 	$result = $result->fetch_assoc();
+					// 	if($result["Year"] == '')
+					// 		echo '<br>L\'anno con più opere è sconosciuto ('.$result["Num"].' opere).<br>';
+					// 	else if($result->num_rows > 1 or $result["Num"] != 1)
+					// 		echo '<br>L\'anno con più opere è il '.$result["Year"].' ('.$result[$fields4[0]].' opere).<br>';
+					// }
 					echo '<br>';
 
 					$query = '
@@ -195,17 +187,19 @@
 							$row = $result->fetch_assoc();
 						} while($row["N"] == $maxCount);
 
-						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
-							echo 'Gli anni con il maggior numero di opere sono:';					// CAMBIARE LE PAROLE, IL RESTO È FATTO
-							for($i = 0; $i < count($maxList); $i++) {
-								echo ', ' .$maxList[$i];
+						if(count($maxList) != $result->num_rows) {
+							if(count($maxList) > 1) {
+								echo 'The most productive years are: ' .$maxList[0];
+								for($i = 1; $i < count($maxList); $i++) {
+									echo ', ' .$maxList[$i];
+								}
 							}
-						}
-						else {
-							echo 'L\'anno con il maggior numero di opere è il ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
-						}
+							else {
+								echo 'The most productive year is: ' .$maxList[0];
+							}
 
-						echo'<br>';
+							echo' - ' .$maxCount. ' artwork(s)<br>';
+						}
 					}
 					
 					$query = '
@@ -226,16 +220,16 @@
 						} while($row["N"] == $maxCount);
 
 						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
-							echo 'I medium con il maggior numero di opere sono:';					// CAMBIARE LE PAROLE, IL RESTO È FATTO
-							for($i = 0; $i < count($maxList); $i++) {
+							echo 'The most used medium are: ' .$maxList[0];					// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							for($i = 1; $i < count($maxList); $i++) {
 								echo ', ' .$maxList[$i];
 							}
 						}
 						else {
-							echo 'Il medium con il maggior numero di opere è ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							echo 'The most used medium is: ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
 						}
 
-						echo'<br>';
+						echo' - ' .$maxCount. ' artwork(s)<br>';
 					}
 
 					$query = '
@@ -256,16 +250,16 @@
 						} while($row["N"] == $maxCount);
 
 						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
-							echo 'Gli ArtistRole con il maggior numero di opere sono:';				// CAMBIARE LE PAROLE, IL RESTO È FATTO
-							for($i = 0; $i < count($maxList); $i++) {
+							echo 'The popular artist roles are: ' .$maxList[0];
+							for($i = 1; $i < count($maxList); $i++) {
 								echo ', ' .$maxList[$i];
 							}
 						}
 						else {
-							echo 'L\'ArtistRole con il maggior numero di opere è il ' .$maxList[0];	// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							echo 'The popular artist role is: ' .$maxList[0];
 						}
 
-						echo'<br>';
+						echo' - ' .$maxCount. ' artwork(s)<br>';
 					}
 					
 					$link->close();

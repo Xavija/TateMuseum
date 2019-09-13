@@ -78,7 +78,7 @@
 
 					echo '<h5 class="title is-5" style="margin-top: -2%;"><center>';
 					if($result["Artist"])
-						echo 'By <a href=artist.php?id="' .$result["ArtistId"]. '">' .str_replace(", ", " ", $result["Artist"]). '</a>';
+						echo 'By <a href=artist.php?id=' .$result["ArtistId"]. '>' .str_replace(", ", " ", $result["Artist"]). '</a>';
 
 					if($result["ArtistRole"])
 						echo ' (role: ' .$result["ArtistRole"]. ')<br>';
