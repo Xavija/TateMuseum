@@ -29,23 +29,14 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Integrazione `connessione.php` e `index.html` (unica pagina)~~
 - Query:
   - prevenzione SQL injection
-  - report(s)
+  - ~~report(s)~~
   - ~~visualizzazione risultati~~
 - ~~Visualizzazione in tabella~~
   - ~~thumbnail e url~~
 - ~~Integrare valori checkbox in php~~
 - ~~Completare l'integrazione dei menù drop down~~
 - ~~Headers effettivi nella pagina~~
-- Calcolo di statistiche relativi ad artisti e opere
-
-
-
-- Michele
-  - ~~tabella con scrollbar~~
-  - ~~fixare tabella scrollbar (bordo esterno con pochi elementi)~~
-  - ~~preparazione pagina per thumbnail e url~~
-  - Abbellire le pagine in depth
-- Phil
-  - report
-  - ~~dropdown~~
-
+- ~~Calcolo di statistiche relativi ad artisti e opere~~
+- Fix coerenza linguistica (ita/eng)
+- Allungare (letteralmente) pagine in-depth
+- Ricerca libera: artwork e/o artisti?
