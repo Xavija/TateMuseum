@@ -219,17 +219,19 @@
 							$row = $result->fetch_assoc();
 						} while($row["N"] == $maxCount);
 
-						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
-							echo 'The most used medium are: ' .$maxList[0];					// CAMBIARE LE PAROLE, IL RESTO È FATTO
-							for($i = 1; $i < count($maxList); $i++) {
-								echo ', ' .$maxList[$i];
+						if(count($maxList) != $result->num_rows) {
+							if(count($maxList) > 1) {
+								echo 'The most used medium are: ' .$maxList[0];
+								for($i = 1; $i < count($maxList); $i++) {
+									echo ', ' .$maxList[$i];
+								}
 							}
-						}
-						else {
-							echo 'The most used medium is: ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
-						}
+							else {
+								echo 'The most used medium is: ' .$maxList[0];
+							}
 
-						echo' - ' .$maxCount. ' artwork(s)<br>';
+							echo' - ' .$maxCount. ' artwork(s)<br>';
+						}
 					}
 
 					$query = '
@@ -249,17 +251,19 @@
 							$row = $result->fetch_assoc();
 						} while($row["N"] == $maxCount);
 
-						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
-							echo 'The popular artist roles are: ' .$maxList[0];
-							for($i = 1; $i < count($maxList); $i++) {
-								echo ', ' .$maxList[$i];
+						if(count($maxList) != $result->num_rows) {
+							if(count($maxList) > 1) {
+								echo 'The most popular artist roles are: ' .$maxList[0];
+								for($i = 1; $i < count($maxList); $i++) {
+									echo ', ' .$maxList[$i];
+								}
 							}
-						}
-						else {
-							echo 'The popular artist role is: ' .$maxList[0];
-						}
+							else {
+								echo 'The most popular artist role is: ' .$maxList[0];
+							}
 
-						echo' - ' .$maxCount. ' artwork(s)<br>';
+							echo' - ' .$maxCount. ' artwork(s)<br>';
+						}
 					}
 					
 					$link->close();
