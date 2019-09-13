@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 	<head>
 	<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="scripts.js"></script>
 		<title>artist.php</title>
 	</head>
-	<body>
+	<body style="height: 100%;">
 		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
 			<div class="level-left">
 				<div class="level-item">
@@ -151,7 +151,7 @@
 					}
 				?>
 				</div>
-				<div class="container">
+				<div class="container" id="pre-footer">
 				<?php
 					$result = $link->query($query3);
 					if($result->num_rows > 0) {
@@ -270,7 +270,7 @@
 				?>
 				</div>
 		</section>
-		<footer class="footer">
+		<footer class="footer" id="piedatore">
 			<div class="content has-text-centered">
 				<p>
 				<a href="index.php">Home</a> | <a href="https://www.tate.org.uk/">TATE</a><br>

@@ -38,5 +38,5 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Headers effettivi nella pagina~~
 - ~~Calcolo di statistiche relativi ad artisti e opere~~
 - ~~Fix coerenza linguistica (ita/eng)~~
-- Allungare (letteralmente) pagine in-depth
+- ~~Allungare (letteralmente) pagine in-depth~~
 - ~~Ricerca libera: artwork e/o artisti?~~

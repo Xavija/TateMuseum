@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 	<head>
 	<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -12,7 +12,7 @@
 		<script type="text/javascript" src="scripts.js"></script>
 		<title>artwork.php</title>
 	</head>
-	<body>
+	<body style="height: 100%;">
 		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
 			<div class="level-left">
 				<div class="level-item">
@@ -88,10 +88,19 @@
 					
 				?>
 				</div>
-				<div class="container">
+				<div class="container" id="pre-footer">
 				<?php
 					if($result["ThumbnailUrl"])
+						/* echo '<figure>';
 						echo '<img src="' .$result["ThumbnailUrl"]. '" style="float: left; border: solid 2px darkgrey; margin-right: 2px;">';
+						echo '</figure>'; */
+					?>
+						<div class="column">
+							<figure>
+						<?php echo '<img src="' .$result["ThumbnailUrl"]. '" style="border: solid 2px darkgrey; margin-right: 2px;">'; ?>
+							</figure>
+						</div>
+					<?php
 
 					if($result["Medium"])
 						echo 'Medium: ' .$result["Medium"] .'<br>';
@@ -120,7 +129,7 @@
 				</div>
 			</div>
 		</section>
-		<footer class="footer">
+		<footer class="footer" id="piedatore">
 			<div class="content has-text-centered">
 				<p>
 				<a href="index.php">Home</a> | <a href="https://www.tate.org.uk/">TATE</a><br>
