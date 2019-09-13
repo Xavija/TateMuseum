@@ -87,7 +87,7 @@
 					$bestArtist = null;
 					for($i = 0; $i < count($fieldsArtist); $i++) {
 						$option = '
-							SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath
+							SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, ID IDA
 							FROM Artist
 							WHERE ' .$fieldsArtist[$i]. ' LIKE "%'.$general.'%"
 							ORDER BY ' .$fieldsArtist[$i]. ' '.$order.'
@@ -104,7 +104,7 @@
 					$bestArtwork = null;
 					for($i = 0; $i < count($fieldsArtwork); $i++) {
 						$option = '
-							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist
+							SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Name, Artist.ID IDA, Artwork.ID ID
 							FROM Artwork JOIN Artist ON Artwork.ArtistId=Artist.ID
 							WHERE ' .$fieldsArtwork[$i]. ' LIKE "%'.$general.'%"
 							ORDER BY ' .$fieldsArtwork[$i]. ' ' .$order. '
@@ -120,12 +120,12 @@
 					if($bestArtwork == 0) {
 						$bestArtwork = $bestArtist + 1;
 					}
-					elseif($bestArtist == 0) {
+					if($bestArtist == 0) {
 						$bestArtist = $bestArtwork + 1;
 					}
 
 					if($bestArtwork < $bestArtist) {
-						array_push($fieldsArtwork, "Artist");
+						array_push($fieldsArtwork, "Name");
 						$query = $queryArtwork;
 						$fields1 = $fieldsArtwork;
 					}
@@ -180,9 +180,9 @@
 							if($artwork_year == '') $artwork_year = '%';
 							if($artist_role == 'all') $artist_role = '%';
 
-							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name');
 							$query = '
-								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Name, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 								WHERE Title LIKE "%'.$title.'%"
 								AND Year LIKE "%'.$artwork_year.'%"
@@ -209,9 +209,9 @@
 
 							if($gender == 'all') $gender = '%';
 
-							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Artist', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
+							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
-								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Artist, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Artist.Name Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 								WHERE Name LIKE "%'.$artist_name.'%"
 								AND Gender LIKE "'.$gender.'"
@@ -388,7 +388,7 @@
 							for($i = 0; $i<count($fields[$j]); $i++) {
 								$class = "";
 								if($k%2 != 0) {
-									$class = "aternate";
+									$class = "alternate";
 								}
 								echo '<td class="' .$class. '" width="' .(100/count($fields[$j])). '%">';
 								if($fields[$j][$i] == "Title") {
@@ -408,7 +408,7 @@
 						}
 						echo '</tbody></table></div>';
 						}
-						else echo 'Internal Error OR Empty Result<br><br>' .$query;	// potremmo aggiungere una query di debug bella e carina da mostrare...
+						else echo 'Internal Error OR Empty Result<br><br>' .$query;	// potremmo scrivere qualcosaltro...
 					}
 				}
 				$link->close();

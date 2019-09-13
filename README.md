@@ -37,6 +37,6 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Completare l'integrazione dei menù drop down~~
 - ~~Headers effettivi nella pagina~~
 - ~~Calcolo di statistiche relativi ad artisti e opere~~
-- Fix coerenza linguistica (ita/eng)
+- ~~Fix coerenza linguistica (ita/eng)~~
 - Allungare (letteralmente) pagine in-depth
-- Ricerca libera: artwork e/o artisti?
+- ~~Ricerca libera: artwork e/o artisti?~~
