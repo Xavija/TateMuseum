@@ -13,81 +13,122 @@
 		<title>artwork.php</title>
 	</head>
 	<body>
-		<?php
-			$server = "localhost";
-			$user	= "michele";
-			$pass 	= "Aero";
-			$db 	= "TATE";
+		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
+			<div class="level-left">
+				<div class="level-item">
+				<p class="subtitle is-3">
+					<strong>TATE</strong> Museum
+				</p>
+				</div>
+			</div>
 
-			$link = new mysqli($server, $user, $pass, $db);
-			if($link->connect_error) {
-				$user	= "phil";
-				$pass 	= "";
+			<div class="level-right">
+				<p class="level-item"><a href="index.php">Home</a></p>
+				<p class="level-item"><a href="https://tate.org.uk">Tate Official</a></p>
+				<p class="level-item">
+					<a href="https://bulma.io"><img src="res/made-with-bulma.png" alt="Bulma" width=128 height=30></a>
+				</p>
+			</div>
+		</nav>
+		<section class="section">
+			<div class="container is-center">
+			<?php
+				$server = "localhost";
+				$user	= "michele";
+				$pass 	= "Aero";
+				$db 	= "TATE";
+
 				$link = new mysqli($server, $user, $pass, $db);
-
 				if($link->connect_error) {
-					echo 'Errore di connessione al database.' . '<br>';
-					echo 'Codice di errore: ' . $link->connect_error . '<br>';
-					exit;
+					$user	= "phil";
+					$pass 	= "";
+					$link = new mysqli($server, $user, $pass, $db);
+
+					if($link->connect_error) {
+						echo 'Errore di connessione al database.' . '<br>';
+						echo 'Codice di errore: ' . $link->connect_error . '<br>';
+						exit;
+					}
 				}
-			}
-			
-			$id = $_GET["id"];
-
-			if($id) {
-				$query ='
-					SELECT *
-					FROM Artwork
-					WHERE ID = ' .$id. '
-					ORDER BY Title ASC;
-				';	
-				// $fields = array('Artist', 'ArtistRole', 'Title', 'Medium', 'Year', 'AcquisitionYear', 'Width', 'Height', 'Depth', 'Units', 'Inscription', 'ThumbnailUrl', 'url');
-			}
-			else {
-				echo 'Errore durante la ricenzione dei dati.';
-			}
-
-			$result = $link->query($query);
-			if($result->num_rows > 0){
-				$result = $result->fetch_assoc();
 				
-				if($result["Title"])
-					echo '<b style="font-size: larger">' .$result["Title"]. '</b><br>';
-				if($result["ThumbnailUrl"])
-					echo '<img src="' .$result["ThumbnailUrl"]. '" style="float: left; border: solid 2px darkgrey; margin-right: 2px;">';
+				$id = $_GET["id"];
 
-				if($result["Artist"])
-					echo 'Artist: <a href=artist.php?id="' .$result["ArtistId"]. '">' .str_replace(", ", " ", $result["Artist"]). '</a>';
-				if($result["ArtistRole"])
-					echo ' (Artist role: ' .$result["ArtistRole"]. ')<br>';
-				else
-					echo '<br>';
-				if($result["Medium"])
-					echo 'Medium: ' .$result["Medium"] .'<br>';
-				
-				echo '<div style="clear: left">';
-				if($result["Year"])
-					echo 'Year of creation: ' .$result["Year"] .'<br>';
-				if($result["AcquisitionYear"])
-					echo 'Year of acquisition: ' .$result["AcquisitionYear"] .'<br>';
-				if($result["Width"] and $result["Height"]) {
-					echo 'Dimensions: ' .$result["Width"]. ' x ' .$result["Height"];
-					if($result["Depth"])
-						echo ' x ' .$result["Depth"];
-					if($result["Units"])
-						echo ' ' .$result["Units"]. '<br>';
+				if($id) {
+					$query ='
+						SELECT *
+						FROM Artwork
+						WHERE ID = ' .$id. '
+						ORDER BY Title ASC;
+					';	
+					// $fields = array('Artist', 'ArtistRole', 'Title', 'Medium', 'Year', 'AcquisitionYear', 'Width', 'Height', 'Depth', 'Units', 'Inscription', 'ThumbnailUrl', 'url');
 				}
-				if($result["Inscription"])
-					echo 'Inscription: "' .$result["Inscription"]. '"<br>';
+				else {
+					echo 'Errore durante la ricenzione dei dati.';
+				}
 
-				echo '<br>Torna alla <a href="index.php">home</a>';
-				if($result["url"])
-					echo 'Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
-				echo '</div>';
-			}
-			else echo 'Internal Error OR Empty Result<br><br>';
+				$result = $link->query($query);
+				if($result->num_rows > 0){
+					$result = $result->fetch_assoc();
+					
+					if($result["Title"]) {
+						echo '<h3 class="title is-3"><center>';
+						echo '<b style="font-size: larger">' .$result["Title"]. '</b><br>';
+						echo '</center></h3>';
+					}
 
-			$link->close();
-		?>
+					echo '<h5 class="title is-5" style="margin-top: -2%;"><center>';
+					if($result["Artist"])
+						echo 'By <a href=artist.php?id="' .$result["ArtistId"]. '">' .str_replace(", ", " ", $result["Artist"]). '</a>';
+
+					if($result["ArtistRole"])
+						echo ' (role: ' .$result["ArtistRole"]. ')<br>';
+					else
+						echo '<br>';
+					echo '</center></h5><br>';
+					
+				?>
+				</div>
+				<div class="container">
+				<?php
+					if($result["ThumbnailUrl"])
+						echo '<img src="' .$result["ThumbnailUrl"]. '" style="float: left; border: solid 2px darkgrey; margin-right: 2px;">';
+
+					if($result["Medium"])
+						echo 'Medium: ' .$result["Medium"] .'<br>';
+					
+					echo '<div style="clear: left">';
+					if($result["Year"])
+						echo 'Year of creation: ' .$result["Year"] .'<br>';
+					if($result["AcquisitionYear"])
+						echo 'Year of acquisition: ' .$result["AcquisitionYear"] .'<br>';
+					if($result["Width"] and $result["Height"]) {
+						echo 'Dimensions: ' .$result["Width"]. ' x ' .$result["Height"];
+						if($result["Depth"])
+							echo ' x ' .$result["Depth"];
+						if($result["Units"])
+							echo ' ' .$result["Units"]. '<br>';
+					}
+					if($result["Inscription"])
+						echo 'Inscription: "' .$result["Inscription"]. '"<br>';
+
+					if($result["url"])
+						echo 'Visita la pagina del <a href="' .$result["url"]. '">sito ufficiale</a>';
+					echo '</div>';
+				}
+				else echo 'Internal Error OR Empty Result<br><br>';
+
+				$link->close();
+				?>
+				</div>
+			</div>
+		</section>
+		<footer class="footer">
+			<div class="content has-text-centered">
+				<p>
+				<a href="index.php">Home</a> | <a href="https://www.tate.org.uk/">TATE</a><br>
+				Made with <a href="https://www.bulma.io"><b>Bulma</b></a>
+				</p>
+			</div>
+		</footer>
 	</body>
 </html>

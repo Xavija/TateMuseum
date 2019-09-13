@@ -13,6 +13,23 @@
 		<title>index.php</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
+		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
+			<div class="level-left">
+				<div class="level-item">
+				<p class="subtitle is-3">
+					<strong>TATE</strong> Museum
+				</p>
+				</div>
+			</div>
+
+			<div class="level-right">
+				<p class="level-item"><strong>Home</strong></p>
+				<p class="level-item"><a href="https://tate.org.uk">Tate Official</a></p>
+				<p class="level-item">
+					<a href="https://bulma.io"><img src="res/made-with-bulma.png" alt="Bulma" width=128 height=30></a>
+				</p>
+			</div>
+		</nav>
 		<?php
 			$server = "localhost";
 			$user	= "michele";
@@ -69,20 +86,22 @@
 				
 					// query: artista
 					$query ='
-						SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
+						SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 						WHERE Title LIKE "%'.$general.'%"
 						ORDER BY Title '.$order.'
 						LIMIT 200
 					;';
-					$fields = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+					$fields1 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 					
+
+
 					$fields = array($fields1);
 					$query_count = 1; 
 				}
 				else {
 					if($general == '' and !$infos[0] and !$infos[1]) { // vuoto
-						$fields = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
+						$fields1 = array('Name', 'Gender', 'PlaceOfBirth', 'PlaceOfDeath', 'YearOfBirth', 'YearOfDeath');
 						/* $query ='
 							SELECT Artwork.Title, Artwork.Year, Artwork.Medium, Artist.Name, Artist.Gender, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
@@ -90,7 +109,7 @@
 							LIMIT 200
 						;'; */
 						$query ='
-							SELECT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
+							SELECT DISTINCT Name, Gender, PlaceOfBirth, PlaceOfDeath, YearOfBirth, YearOfDeath, Artist.ID IDA
 							FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 							ORDER BY Name '.$order.'
 							LIMIT 200
@@ -139,6 +158,7 @@
 								AND Inscription LIKE "%'.$inscription.'%"
 								AND ArtistRole LIKE "%'.$artist_role.'%"
 								ORDER BY Title '.$order.'
+								LIMIT 200
 							;';
 							
 							$query_count = 1;
@@ -159,7 +179,7 @@
 
 							$fields1 = array('Title', 'Year', 'Medium', 'Inscription', 'ArtistRole', 'Name', 'Gender', 'YearOfBirth', 'YearOfDeath', 'PlaceOfBirth', 'PlaceOfDeath');
 							$query = '
-								SELECT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
+								SELECT DISTINCT Title, Year, Medium, Inscription, ArtistRole, Name, Gender, YearOfBirth, YearOfDeath, PlaceOfBirth, PlaceOfDeath, Artwork.ThumbnailUrl, Artwork.ID ID, Artist.ID IDA
 								FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
 								WHERE Name LIKE "%'.$artist_name.'%"
 								AND Gender LIKE "'.$gender.'"
@@ -171,6 +191,7 @@
 								AND Inscription LIKE "%'.$inscription.'%"
 								AND ArtistRole LIKE "%'.$artist_role.'%"
 								ORDER BY Title '.$order.'
+								LIMIT 200
 							;';
 							
 							$query_count = 1;

@@ -13,6 +13,23 @@
 		<title>artist.php</title>
 	</head>
 	<body>
+		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
+			<div class="level-left">
+				<div class="level-item">
+				<p class="subtitle is-3">
+					<strong>TATE</strong> Museum
+				</p>
+				</div>
+			</div>
+
+			<div class="level-right">
+				<p class="level-item"><a href="index.php">Home</a></p>
+				<p class="level-item"><a href="https://tate.org.uk">Tate Official</a></p>
+				<p class="level-item">
+					<a href="https://bulma.io"><img src="res/made-with-bulma.png" alt="Bulma" width=128 height=30></a>
+				</p>
+			</div>
+		</nav>
 		<section class="section">
 			<div class="container">
 				<?php
@@ -159,12 +176,102 @@
 						else if($result->num_rows > 1 or $result["Num"] != 1)
 							echo '<br>L\'anno con più opere è il '.$result["Year"].' ('.$result[$fields4[0]].' opere).<br>';
 					}
+					echo '<br>';
 
+					$query = '
+						SELECT Artwork.Year Year, COUNT(Artwork.ID) N
+						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+						WHERE Artist.ID = ' .$id. '
+						GROUP BY Artwork.Year
+						ORDER BY N DESC
+					';
+					$result = $link->query($query);
+					if($result->num_rows > 1) {
+						$row = $result->fetch_assoc();
+						$maxCount = $row["N"];
+						$maxList = array();
+						do {
+							array_push($maxList, $row["Year"]);
+							$row = $result->fetch_assoc();
+						} while($row["N"] == $maxCount);
+
+						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
+							echo 'Gli anni con il maggior numero di opere sono:';					// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							for($i = 0; $i < count($maxList); $i++) {
+								echo ', ' .$maxList[$i];
+							}
+						}
+						else {
+							echo 'L\'anno con il maggior numero di opere è il ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
+						}
+
+						echo'<br>';
+					}
+					
+					$query = '
+						SELECT Artwork.Medium Medium, COUNT(Artwork.ID) N
+						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+						WHERE Artist.ID = ' .$id. '
+						GROUP BY Artwork.Medium
+						ORDER BY N DESC
+					';
+					$result = $link->query($query);
+					if($result->num_rows > 1) {
+						$row = $result->fetch_assoc();
+						$maxCount = $row["N"];
+						$maxList = array();
+						do {
+							array_push($maxList, $row["Medium"]);
+							$row = $result->fetch_assoc();
+						} while($row["N"] == $maxCount);
+
+						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
+							echo 'I medium con il maggior numero di opere sono:';					// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							for($i = 0; $i < count($maxList); $i++) {
+								echo ', ' .$maxList[$i];
+							}
+						}
+						else {
+							echo 'Il medium con il maggior numero di opere è ' .$maxList[0];		// CAMBIARE LE PAROLE, IL RESTO È FATTO
+						}
+
+						echo'<br>';
+					}
+
+					$query = '
+						SELECT Artwork.ArtistRole ArtistRole, COUNT(Artwork.ID) N
+						FROM Artist JOIN Artwork ON Artist.ID = Artwork.ArtistId
+						WHERE Artist.ID = ' .$id. '
+						GROUP BY Artwork.ArtistRole
+						ORDER BY N DESC
+					';
+					$result = $link->query($query);
+					if($result->num_rows > 1) {
+						$row = $result->fetch_assoc();
+						$maxCount = $row["N"];
+						$maxList = array();
+						do {
+							array_push($maxList, $row["ArtistRole"]);
+							$row = $result->fetch_assoc();
+						} while($row["N"] == $maxCount);
+
+						if(count($maxList) > 1 and count($maxList) != $result->num_rows) {
+							echo 'Gli ArtistRole con il maggior numero di opere sono:';				// CAMBIARE LE PAROLE, IL RESTO È FATTO
+							for($i = 0; $i < count($maxList); $i++) {
+								echo ', ' .$maxList[$i];
+							}
+						}
+						else {
+							echo 'L\'ArtistRole con il maggior numero di opere è il ' .$maxList[0];	// CAMBIARE LE PAROLE, IL RESTO È FATTO
+						}
+
+						echo'<br>';
+					}
+					
 					$link->close();
 				?>
 				</div>
 		</section>
-		
 		<footer class="footer">
 			<div class="content has-text-centered">
 				<p>
