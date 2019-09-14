@@ -71,7 +71,7 @@
 						FROM Artist
 						WHERE ID = ?
 					;');
-					$queryArtistIDs->bind_param('s', $id);
+					$queryArtistIDs->bind_param('i', $id);
 					
 					$queryArtistIDs->execute();
 					$result = $queryArtistIDs->get_result();
@@ -128,7 +128,7 @@
 						FROM Artist JOIN Artwork ON Artist.ID=Artwork.ArtistId
 						WHERE Artist.ID = ?
 					;');
-					$queryNumArtworks->bind_param('s', $id);
+					$queryNumArtworks->bind_param('i', $id);
 					
 					$queryNumArtworks->execute();
 					$result = $queryNumArtworks->get_result();
@@ -147,7 +147,7 @@
 						GROUP BY Artwork.Year
 						ORDER BY N DESC
 					');
-					$queryMostProductiveYear->bind_param('s', $id);
+					$queryMostProductiveYear->bind_param('i', $id);
 					
 					$queryMostProductiveYear->execute();
 					$result = $queryMostProductiveYear->get_result();
@@ -182,7 +182,7 @@
 						GROUP BY Artwork.Medium
 						ORDER BY N DESC
 					');
-					$queryMostUsedMedium->bind_param('s', $id);
+					$queryMostUsedMedium->bind_param('i', $id);
 
 					$queryMostUsedMedium->execute();
 					$result = $queryMostUsedMedium->get_result();
@@ -218,7 +218,7 @@
 						GROUP BY Artwork.ArtistRole
 						ORDER BY N DESC
 					');
-					$queryMostFrequentRole->bind_param('s', $id);
+					$queryMostFrequentRole->bind_param('i', $id);
 
 					$queryMostFrequentRole->execute();
 					$result = $queryMostFrequentRole->get_result();

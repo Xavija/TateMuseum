@@ -67,7 +67,7 @@
 						WHERE ID = ?
 						ORDER BY Title ASC;
 					');
-					$queryArtworkIDs->bind_param('s', $id);
+					$queryArtworkIDs->bind_param('i', $id);
 					
 					$queryArtworkIDs->execute();
 					$result = $queryArtworkIDs->get_result();
