@@ -258,8 +258,7 @@
 				<div id="SearchTabs">
 					<div id="guided" style="display: block;">
 						<b>Filters</b><br>
-						<div style="text-align: left;">
-						<center>
+						<div style="text-align: left;"><center>
 							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true"> Artist
 							<div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
 								<div class="control">
