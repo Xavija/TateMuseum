@@ -240,14 +240,14 @@
 				<h3 class="title is-3" style="text-align: center;">Search</h3>
 				<div class="tabs is-toggle is-centered">
 					<ul>
-						<li class="is-active" id="5">
-							<a href="javascript:SearchTabsJS( 'guided', '5') ">
+						<li class="is-active" id="2">
+							<a href="javascript:SearchTabs( 'guided', '2') ">
 								<span class="icon is-small "><i class="fas "></i></span>
 								<span>Guided</span>
 							</a>
 						</li>
-						<li class="" id="4">
-							<a href="javascript:SearchTabsJS( 'general', '4') ">
+						<li class="" id="1">
+							<a href="javascript:SearchTabs( 'general', '1') ">
 								<span class="icon is-small "><i class="fas "></i></span>
 								<span>General</span>
 							</a>
