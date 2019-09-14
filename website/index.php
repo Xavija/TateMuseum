@@ -5,12 +5,12 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.6.2/css/bulma.min.css">
-		<link rel="stylesheet" href="bulma.min.css">
-		<link rel="stylesheet" href="style.css">
-		
 		<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-		<script type="text/javascript" src="scripts.js"></script>
-		<title>index.php</title>
+
+		<link rel="stylesheet" href="./res/style.css">
+		<script type="text/javascript" src="./res/scripts.js"></script>
+
+		<title>TATE Museum | Search</title>
 	</head>
 	<body style="font-family: Arial; font-size: 125%; color: #444444;">
 		<nav class="level" style="margin-bottom: 0; border-bottom: solid #bbb 5px;">
