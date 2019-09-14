@@ -27,8 +27,8 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 ## ToDo
 
 - ~~Integrazione `connessione.php` e `index.html` (unica pagina)~~
-- Query:
-  - prevenzione SQL injection
+- ~~Query:~~
+  - ~~prevenzione SQL injection~~
   - ~~report(s)~~
   - ~~visualizzazione risultati~~
 - ~~Visualizzazione in tabella~~
@@ -40,3 +40,4 @@ Il sito web deve poter offrire le seguenti funzionalità di minima:
 - ~~Fix coerenza linguistica (ita/eng)~~
 - ~~Allungare (letteralmente) pagine in-depth~~
 - ~~Ricerca libera: artwork e/o artisti?~~
+
