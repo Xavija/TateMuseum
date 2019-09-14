@@ -259,6 +259,7 @@
 					<div id="guided" style="display: block;">
 						<b>Filters</b><br>
 						<div style="text-align: left;">
+						<center>
 							<input type="checkbox" id="ArtistInfo" name="artistInfo" value="true"> Artist
 							<div id="ArtistDiv" style="margin-bottom: -5%;" hidden>
 								<div class="control">
@@ -281,7 +282,7 @@
 							</div>
 							<br>
 							<input type="checkbox" id="ArtworkInfo" name="artworkInfo" value="true"> Artwork
-							<div id="ArtworkDiv" style="margin-bottom: -1%;" hidden>
+							<div id="ArtworkDiv" style="margin-bottom: 3%;" hidden>
 								<div class="control">
 									<input class="input is-rounded is-focused" type="text" name="title" placeholder="Title" style="margin-top:4px; margin-bottom: 7px;">
 									<input class="input is-rounded is-focused" type="text" name="inscription" placeholder="Inscription" style="margin-top:4px; margin-bottom: 7px;">
@@ -307,6 +308,7 @@
 									</div>
 								</div>
 							</div>
+						<center>
 						</div>
 					</div>
 
