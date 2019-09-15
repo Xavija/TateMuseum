@@ -126,7 +126,8 @@
 						$fields1 = $fieldsArtist;
 					}
 
-					$fields = array($fields1);
+					/* $fields = array($fields1); */
+					$fields = $fields1;
 					$query_count = 1; 
 				}
 				else {
