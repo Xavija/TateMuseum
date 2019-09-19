@@ -1,0 +1,46 @@
+DROP DATABASE IF EXISTS TATE;
+CREATE DATABASE TATE;
+USE TATE;
+
+CREATE TABLE Artist
+(
+	ID INT,
+	Name VARCHAR(256),
+	Gender VARCHAR(6),
+	Dates VARCHAR(256),
+	YearOfBirth VARCHAR(4),
+	YearOfDeath VARCHAR(4),
+	PlaceOfBirth VARCHAR(256),
+	PlaceOfDeath VARCHAR(256),
+	url VARCHAR(256),
+
+	PRIMARY KEY(ID)
+);
+
+CREATE TABLE Artwork
+(
+	ID INT NOT NULL AUTO_INCREMENT,
+	AccessionNumber VARCHAR(7),
+	Artist VARCHAR(256) NOT NULL,
+	ArtistRole VARCHAR(25),
+	ArtistId INT,
+	Title VARCHAR(256) NOT NULL,
+	DateText VARCHAR(256),
+	Medium VARCHAR(256),
+	CreditLine VARCHAR(512),
+	Year VARCHAR(8),
+	AcquisitionYear VARCHAR(4),
+	Dimensions VARCHAR(256),
+	Width VARCHAR(12),
+	Height VARCHAR(5),
+	Depth VARCHAR(5),
+	Units VARCHAR(2),
+	Inscription VARCHAR(512),
+	ThumbnailCopyright VARCHAR(512),
+	ThumbnailUrl VARCHAR(512),
+	url VARCHAR(512),
+
+	PRIMARY KEY(ID),
+	FOREIGN KEY(ArtistId) REFERENCES Artist(ID)
+		ON UPDATE CASCADE ON DELETE RESTRICT
+);
